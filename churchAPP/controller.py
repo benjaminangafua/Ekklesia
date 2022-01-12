@@ -24,7 +24,8 @@ def createChurchAccount():
                     churchData["name"], churchData["code"], churchData["mail"], churchData["phone"],  churchData["bankNo"])
         return redirect("/home")   
     return render_template("create.church.html")     
-# home
+
+# landing page
 def home():
     
     # account name """Need authentication"""
@@ -121,6 +122,7 @@ def createMember():
 def seeMember():
     members = db.execute("SELECT * FROM members ORDER BY id")
     return render_template("member.html",members=members)
+
 # Get new converts
 def new_convert():
     if request.method == "POST":
@@ -149,6 +151,7 @@ def convert():
     convert = db.execute("SELECT * FROM new_convert ORDER BY joined_date")
     return render_template("new-convert.html", converts=convert)
 
+# get first timers
 def first_timer():
     if request.method == "POST":
         new={}
@@ -174,12 +177,13 @@ def first_timer():
 
     return render_template("add-first-timers.html")
 
+# display first time visitors
 def visitors():
     visitors_name = db.execute("SELECT * FROM first_time_visitors ORDER BY id")
     return render_template("first-time-visitor.html", visitors_name=visitors_name)
-   
+
+# display birthday
 def birthday():
-    
     # Months for birthday
     months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
     this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
@@ -187,6 +191,7 @@ def birthday():
         
     return render_template("birthday.html", member=birth_rec, thisMONTH=this_month, months=months)
 
+# take attendance
 def takeAttendance():
     if request.method == "POST":
 
@@ -207,15 +212,49 @@ def takeAttendance():
 
     return render_template("new-attendance.html", member_names=member_names)
 
+# send apology for invalid input
 def apology(message):
     return render_template("apology.html", message=message)
 
-# Offering
+# get Offering
 def payOffering():
+    data = db.execute("SELECT * FROM offering;")
+
     if request.method == "POST":
         offering={}
-    return render_template("offering.html")
+        offering["name"] = request.form.get("name")
+        offering["amount"] = request.form.get("amount")
+        offering["number"] = request.form.get("account")
+        if len(data) > 0:
+            for name in data:
+                if name["name"]== offering["name"]:
+                    db.execute("UPDATE offering SET member_name=:name, amount=:amount, number=number, pay_day=date('now') WHERE id >= 0",name= offering["name"], amount=offering["amount"], number=offering["number"])
+                    return redirect("/home")
+            db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", offering["name"], offering["amount"], offering["number"])
+            return redirect("/home")
+
+        else:
+            db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", offering["name"], offering["amount"], offering["number"])
+            return redirect("/home")
     
+    return render_template("offering.html")
+
+# display notification
+def notification():
+    render_offering = db.execute("SELECT * FROM offering ORDER BY pay_day DESC;")
+    db.execute("DELETE FROM offering WHERE id > 0")
+    return render_template("notification", notifying=render_offering)
+
+# member_name VARCHAR(50), 
+# due NUMERIC, 
+# offering NUMERIC, 
+# donation NUMERIC, 
+# tithe NUMERIC,
+# account INTEGER,
+# mobile_number TEXT,
+# pay_day
+
+
 # ------------------------------
 # communication | Finance
 # -------------------------------

@@ -1,5 +1,6 @@
 from re import S
 
+from jinja2 import Template
 from flask import Flask, Blueprint, render_template, request, jsonify, redirect
 # from sqlalchemy.sql.expression import join
 from churchAPP import db
@@ -120,3 +121,10 @@ def table():
 @views.route('/offering', methods=["GET", "POST"])
 def getOffering():
     return payOffering()
+
+# send notification
+@views.app_context_processor
+def notifyUpdate():
+    notify = len(db.execute("SELECT * FROM offering;"))
+    return  dict(notify=notify)
+    
