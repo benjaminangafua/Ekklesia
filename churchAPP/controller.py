@@ -2,8 +2,11 @@ from flask import Flask, Blueprint, render_template, request, jsonify, redirect
 # from sqlalchemy.sql.expression import join
 from churchAPP import db
 from .email import sendMail
+# account name """Need authentication"""
+churchName= db.execute("SELECT name FROM account")[2]["name"]
 
-
+acc_name = []
+MemberData = db.execute("SELECT * FROM members")
 # Create church account
 def createChurchAccount():
     data = db.execute("SELECT * FROM account")
@@ -14,60 +17,67 @@ def createChurchAccount():
         churchData["mail"] = request.form.get("mail")
         churchData["phone"] = request.form.get("phone")
         churchData["bankNo"] = request.form.get("bankNo")
+        churchData["anniversary"] = request.form.get("anniversary")
+        acc_name.append(churchData["anniversary"])
         churchData["code"] = int(request.form.get("code"))
         if len(data) > 0:
             for name in data:
                 if name["name"]==churchData["name"]:
                     message =  "Church already exist"
                     apology(message)
-        db.execute("INSERT INTO account(name, code, email, phone, bank_account) VALUES(?, ?, ?, ?, ?)",
-                    churchData["name"], churchData["code"], churchData["mail"], churchData["phone"],  churchData["bankNo"])
+        db.execute("INSERT INTO account(name, code, email, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?)",
+                    churchData["name"], churchData["code"], churchData["mail"], churchData["anniversary"], churchData["phone"],  churchData["bankNo"])
         return redirect("/home")   
     return render_template("create.church.html")     
 
 # landing page
 def home():
-    
-    # account name """Need authentication"""
-    church = db.execute("SELECT name FROM account")[0]["name"]
-    print(church)
-
     # Birthday's section
-    data = db.execute("SELECT * FROM birthday")
     memberSum = db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)']
     
     # Department's Section
     deparmentSum = db.execute('SELECT COUNT(DISTINCT(department)) FROM members')[0]['COUNT(DISTINCT(department))']
 
-    if len(data) > 0:
+    
+    if len(MemberData) > 0:
         # Birthday entry
         this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
-        this_day = int(db.execute("SELECT strftime('%d','now');")[0]["strftime('%d','now')"])
-        birth_record = db.execute(f"SELECT COUNT(*) FROM birthday WHERE month = {this_month}")[0]['COUNT(*)']
-        today_birtday = db.execute(f"SELECT COUNT(DISTINCT(name)) FROM birthday WHERE day = {this_day}")[0]['COUNT(DISTINCT(name))']
+        today = int(db.execute("SELECT strftime('%d','now');")[0]["strftime('%d','now')"])
         
-        # print(birth_record)
+        birth = db.execute(f"SELECT strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day' FROM members")
+        
+        # Number of birthdays today
+        birth_day = []
+        for day in birth:
+            if int(day["Day"]) == today:
+               birth_day.append(len(day["Day"]))
+
+        # Number of birthdays this month
+        birth_month = []
+        for month in birth:
+            if int(month["Month"]) == this_month:
+               birth_month.append(len(month["Month"]))
+
         # Attendance
         attendance = int(db.execute("SELECT total_attendance FROM attendance")[0]["total_attendance"])
-        
         floating_pre = (attendance * 100) / int(memberSum)
         present_percent = float("{:.2f}".format(floating_pre))
-
-        # print("Presence =================>>>>",present_percent)
 
         # Absence
         absence = int(memberSum) - attendance
         floating = (absence * 100) / int(memberSum)
         absent_percent = float("{:.2f}".format(floating))
 
-        # print("Absence =================>>>>", absent_percent)
+        newmember = db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)']
+
+        anniversary = db.execute("SELECT anniversary FROM account")[2]['anniversary']
 
         # Member's Section
         return render_template("index.html", 
-        numOfBirthday=birth_record, todayNumOfBirthday=today_birtday, 
+        birth_sum_today=birth_day[0], birth_sum_this_month=birth_month[0], newmember=newmember,anniversary=anniversary,
         deparmentSum=deparmentSum, memberSum=memberSum, attendance=attendance,
          absence=absence, absent_percent=absent_percent, present_percent=present_percent,
-         church=church)
+         church=churchName)
     
     return render_template("index.html", deparmentSum=deparmentSum, memberSum=memberSum)
 
@@ -84,7 +94,7 @@ def createMember():
         member_data["contact"] = request.form.get("contact")
         member_data["role_play"] = request.form.get("role")
         member_data["occupation"] = request.form.get("occupation")
-        
+        member_data["weddingdate"] = request.form.get("weddingdate")
         member_data["date_of_birth"] = request.form.get("date_of_birth")
         member_data["gender"] =request.form.get("gender")
 
@@ -94,27 +104,10 @@ def createMember():
                 if name["name"]==member_data["name"]:
                     message =  "Name already exist"
                     apology(message)
-        db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?, date('now'))",
-                       member_data["name"], member_data["location"], member_data["department"],  member_data["gender"], member_data["contact"], member_data["relationship"], member_data["occupation"], member_data["role_play"], member_data["date_of_birth"])
+        db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
+                       member_data["name"], member_data["location"], member_data["department"],  member_data["gender"], member_data["contact"], 
+                       member_data["relationship"], member_data["occupation"], member_data["role_play"], member_data["date_of_birth"], member_data["weddingdate"])
         
-        dob = db.execute("SELECT name, strftime('%Y',date_of_birth) as 'Year', strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day'FROM members;")
-       
-        DATEOFBIRTH = db.execute("SELECT * FROM birthday")
-        
-        for new in dob:
-
-            # Check for duplicate
-            if len(data) > 0:
-                if len(DATEOFBIRTH) > 0:
-                    for name in DATEOFBIRTH:
-                        if name["name"]== new["name"]:
-
-                            message = "Nam already taken."
-                            apology(message)
-                        # Insert Date of birth
-                        db.execute("INSERT INTO birthday(name, day, month) VALUES(?, ?, ?)", new["name"], new["Day"], new["Month"])
-            db.execute("INSERT INTO birthday(name, day, month) VALUES(?, ?, ?)", new["name"], new["Day"], new["Month"])
-            
         return redirect("/home")
     return render_template('add-new-member.html')
 
@@ -187,14 +180,19 @@ def birthday():
     # Months for birthday
     months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
     this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
-    birth_rec = db.execute("SELECT * FROM birthday")
-        
+    birth_rec = db.execute("SELECT name, strftime('%Y',date_of_birth) as 'Year', strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day'FROM members;")
     return render_template("birthday.html", member=birth_rec, thisMONTH=this_month, months=months)
+
+def weddingAnniversary():
+    # Months for wedding
+    months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
+    this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
+    birth_rec = db.execute("SELECT name, strftime('%Y',wedding_anniversary) as 'Year', strftime('%m',wedding_anniversary) as 'Month', strftime('%d',wedding_anniversary) as 'Day'FROM members;")
+    return render_template("wedding.html", member=birth_rec, thisMONTH=this_month, months=months)
 
 # take attendance
 def takeAttendance():
     if request.method == "POST":
-
         num = request.form.getlist("num")
         totatl_attendance = len(num)
                 
@@ -205,7 +203,6 @@ def takeAttendance():
             
         # Loop through the attendance , total_attendance=:total, total=totatl_attendance
         for name in num:
-            
             db.execute("UPDATE attendance SET name=:name, total_attendance=:total, date=date('now') WHERE id >= 0",total=totatl_attendance,  name=name)
         
     member_names = db.execute("SELECT DISTINCT(name), id FROM members")
@@ -237,22 +234,18 @@ def payOffering():
             db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", offering["name"], offering["amount"], offering["number"])
             return redirect("/home")
     
-    return render_template("offering.html")
+    return render_template("offering.html", church=churchName)
 
 # display notification
 def notification():
     render_offering = db.execute("SELECT * FROM offering ORDER BY pay_day DESC;")
-    db.execute("DELETE FROM offering WHERE id > 0")
-    return render_template("notification", notifying=render_offering)
+    # db.execute("DELETE FROM offering WHERE id > 0")
+    return render_template("notification.html", notifying=render_offering)
 
-# member_name VARCHAR(50), 
-# due NUMERIC, 
-# offering NUMERIC, 
-# donation NUMERIC, 
-# tithe NUMERIC,
-# account INTEGER,
-# mobile_number TEXT,
-# pay_day
+def sendAccountName():
+    acc = db.execute("SELECT name FROM account")
+    for name, same in zip(acc, acc_name):
+        print(name, same)
 
 
 # ------------------------------

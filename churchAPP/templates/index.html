@@ -12,73 +12,10 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row column1">
-        <div class="col-md-6 col-lg-3">
-            <div class="full counter_section margin_bottom_30">
-                <div class="couter_icon">
-                    <div>
-                        <i class="fa fa-user yellow_color"></i>
-                    </div>
-                </div>
-                <div class="">
-                    <div>
-                        <p class="total_no">2500</p>
-                        <p class="head_couter">Welcome</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="full counter_section margin_bottom_30">
-                <div class="couter_icon">
-                    <div>
-                        <i class="fa fa-clock-o blue1_color"></i>
-                    </div>
-                </div>
-                <div class="">
-                    <div>
-                        <p class="total_no">123.50</p>
-                        <p class="head_couter">Average Time</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="full counter_section margin_bottom_30">
-                <div class="couter_icon">
-                    <div>
-                        <i class="fa fa-cloud-download green_color"></i>
-                    </div>
-                </div>
-                <div class="">
-                    <div>
-                        <p class="total_no">1,805</p>
-                        <p class="head_couter">Collections</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="full counter_section margin_bottom_30">
-                <div class="couter_icon">
-                    <div>
-                        <i class="fa fa-comments-o red_color"></i>
-                    </div>
-                </div>
-                <div class="">
-                    <div>
-                        <p class="total_no">54</p>
-                        <p class="head_couter">Comments</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div class="row column1 social_media_section">
         <div class="col-md-6 col-lg-3">
             <div class="full socile_icons tw margin_bottom_30">
                 <div class="social_icon">
-                    <!-- <i class="fa fa-facebook"></i> -->
                     <h1>Members</h1>
                 </div>
                 <div class="social_cont">
@@ -95,11 +32,7 @@
                     <h1>Departments </h1>
                 </div>
                 <div class="social_cont">
-                    <!-- <ul>
-                        <li>
-                            <span>Groups</span>
-                        </li>
-                    </ul> -->
+
                     <div class="couter_icon">
                         <i class="fa fa-object-group yellow_color"></i>
                     </div>
@@ -107,7 +40,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 col-lg-3">
             <div class="full socile_icons tw margin_bottom_30">
                 <div class="social_icon">
@@ -151,11 +83,11 @@
                 <div class="social_cont">
                     <ul>
                         <li>
-                            <h4> 3</h4>
+                            <h4> {{newmember}}</h4>
                             <h4> This Month</h4>
                         </li>
                         <li id="focus">
-                            <span><strong>20</strong></span>
+                            <span><strong>{{newmember}}</strong></span>
                             <strong>This year</strong>
                         </li>
                     </ul>
@@ -175,26 +107,24 @@
                     <div class="social_cont">
                         <ul>
                             <li>
-
-                                <h3>{{todayNumOfBirthday}}</h3>
+                                <h3>{{birth_sum_today}}</h3>
                                 <h4>Today</h4>
                             </li>
                             <li id="focus">
-                                <span><strong>{{numOfBirthday}}</strong></span>
+                                <span><strong>{{birth_sum_this_month}}</strong></span>
                                 <strong>This month</strong>
                             </li>
+
                         </ul>
                     </div>
 
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 col-lg-3">
             <div class="full socile_icons tw margin_bottom_30">
                 <div class="social_icon">
                     <h1>Marriage </h1>
-                    <!--  -->
                 </div>
                 <div class="social_cont">
                     <div class="couter_icon">
@@ -236,6 +166,22 @@
                             <h4>Need follow-up</h4>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="full socile_icons tw margin_bottom_30">
+                <div class="social_icon">
+                    <h1>Anniversary's Date</h1>
+                </div>
+                <div style="text-align: center; padding-top: 10px;">
+
+                    <img src="{{url_for('static', filename='images/layout_img/follow.png')}}" width="20%">
+
+                </div>
+                <div class="social_cont">
+
+                    <strong>{{anniversary}}</strong>
                 </div>
             </div>
         </div>

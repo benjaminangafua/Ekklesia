@@ -4,11 +4,13 @@
 <!-- end -->
 {% block innerContaint %}
 
+
+
 <div class="row graph mt-5">
     <div class="col-md-12">
         <div class="dash_blog_inner">
             <div class="dash_head center1">
-                <h3><span><i class="fa fa-calendar"></i> {{months[thisMONTH]}}'s Celebrants</span></h3>
+                <h3><span><i class="fa fa-calendar"></i> {{months[thisMONTH]}} Wedding Anniversary Celebrants</span></h3>
             </div>
             <div class="task_list_main">
                 <div class="full graph_head">
@@ -54,7 +56,7 @@
                 {% for person in member %} {% if thisMONTH == person.Month|int %}
                 <!-- column contact -->
                 <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 profile_details margin_bottom_30">
-                    <h4>Come let's celebrate {{person.name}}'s Birthday </h4>
+                    <h4>Come let's celebrate {{person.name}}'s Wedding Anniversary </h4>
                     <div class="contact_blog">
                         <h4 class="brief">Digital Strategist</h4>
                         <div class="contact_inner">

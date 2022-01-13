@@ -89,6 +89,14 @@
                                 <li><a href="/add-new-convert">> <span>Add New Convert</span></a></li>
                             </ul>
                         </li>
+                        <li><a href="#events" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-calendar purple_color2"></i> <span>Events</span></a>
+                            <ul class="collapse list-unstyled" id="events">
+                                <li><a href="/birthday">> <span>Birthday</span></a></li>
+                                <li><a href="/wedding">> <span>Wedding</span></a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/offering"><i class="fa fa-money blue2_color"></i> <span>Giving</span></a>
+                        </li>
                         <li>
                             <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><img style="width: 2rem;" src="{{url_for('static', filename='images/layout_img/communication.png')}}" alt=""> <span>Communiction</span></a>
                             <ul class="collapse list-unstyled" id="apps">
@@ -98,21 +106,7 @@
                             </ul>
                         </li>
 
-                        <li><a href="#events" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-calendar purple_color2"></i> <span>Events</span></a>
-                            <ul class="collapse list-unstyled" id="events">
-                                <li><a href="/birthday">> <span>Birthday</span></a></li>
-                                <li><a href="/wedding">> <span>Wedding</span></a></li>
-                                <li><a href="/anniversary">> <span>Anniversary</span></a></li>
-                            </ul>
-                        </li>
 
-                        <li><a href="#giving" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-money blue2_color"></i> <span>Giving</span></a>
-                            <ul class="collapse list-unstyled" id="giving">
-                                <li><a href="/offering">> <span>Offerning</span></a></li>
-                                <li><a href="/donation">> <span>Online Donation</span></a></li>
-                                <li><a href="/tithe">> <span>Tithe</span></a></li>
-                            </ul>
-                        </li>
 
                         <li><a href="#report" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-briefcase  green_color"></i> <span>Report</span></a>
                             <ul class="collapse list-unstyled" id="report">
@@ -121,9 +115,6 @@
                                 <li><a href="/tithe">> <span>Celebration</span></a></li>
                             </ul>
                         </li>
-                        <!-- <li><a href="/table"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li> -->
-
-                        <!-- <li><a href="/price"><i class="fa fa-briefcase blue1_color"></i> <span>Pinvoicericing Tables</span></a></li> -->
                         <li>
                             <a href="/contact">
                                 <i class="fa fa-paper-plane red_color"></i> <span>Contact</span></a>
@@ -158,7 +149,7 @@
                             <div class="right_topbar">
                                 <div class="icon_info">
                                     <ul>
-                                        <li title="notitifications"><a href="#"><i class="fa fa-bell-o"></i><span class="badge"  onclick="javascript:this.innerHTML = 0">{{notify}}</span></a></li>
+                                        <li title="notitifications"><a href="/notification"><i class="fa fa-bell-o"></i><span class="badge"  onclick="javascript:this.innerHTML = 0">{{notify}}</span></a></li>
                                         <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
                                         <li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a></li>
                                     </ul>

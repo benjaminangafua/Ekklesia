@@ -4,7 +4,7 @@ from jinja2 import Template
 from flask import Flask, Blueprint, render_template, request, jsonify, redirect
 # from sqlalchemy.sql.expression import join
 from churchAPP import db
-from .controller import apology, convert, payOffering, home,createMember, seeMember, new_convert, first_timer, visitors, birthday, takeAttendance, createChurchAccount
+from .controller import notification, convert, payOffering, home,createMember, seeMember, new_convert, first_timer, visitors, birthday, weddingAnniversary, takeAttendance, createChurchAccount
 views = Blueprint('views', __name__)
 
 # Landing page
@@ -53,7 +53,10 @@ def getVisitor():
 def getBirthday():
     return birthday()
 
-
+# wedding list
+@views.route("/wedding")
+def sendWedding():
+    return weddingAnniversary()
 # create attendance
 @views.route("/new-attendance", methods=["GET", "POST"])
 def attendance():
@@ -128,3 +131,11 @@ def notifyUpdate():
     notify = len(db.execute("SELECT * FROM offering;"))
     return  dict(notify=notify)
     
+# render notification template
+@views.route("/notification")
+def renderNotification():
+    return notification(), clearBNotification(notifyUpdate())
+
+def clearBNotification(notes):
+    notes = 0
+    return notes

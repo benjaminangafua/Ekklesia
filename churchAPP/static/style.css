@@ -149,7 +149,7 @@ h6 {
 }
 
 h1 {
-    font-size: 24px
+    font-size: 20px
 }
 
 .small_heading.main-heading h2 {
@@ -586,6 +586,12 @@ a:focus {
 .center {
     display: flex;
     justify-content: center;
+}
+
+#center {
+    text-align: center;
+    background-color: #b5e7eb;
+    /* align-items: center; */
 }
 
 .verticle_center {
