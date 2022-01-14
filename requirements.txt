@@ -10,7 +10,6 @@ click==8.0.3
 colorama==0.3.7
 command-not-found==0.3
 cryptography==2.1.4
-cs50==8.0.1
 cupshelpers==1.0
 dataclasses==0.8
 defer==1.0.6
