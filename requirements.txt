@@ -1,6 +1,5 @@
 Flask
 gunicorn
 jinja2
-email
 psycopg2
 requests
