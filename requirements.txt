@@ -3,3 +3,4 @@ gunicorn
 jinja2
 psycopg2
 requests
+cs50
