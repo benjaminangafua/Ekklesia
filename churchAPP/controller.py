@@ -121,6 +121,8 @@ def new_convert():
     if request.method == "POST":
         new={}
         new["name"]=request.form.get("name")
+        new["date_of_birth"] = request.form.get("date_of_birth")
+        new["gender"] =request.form.get("gender")
         new["location"] = request.form.get("location")
         new["contact"] = request.form.get("contact")
         data = db.execute("SELECT * FROM new_convert")
@@ -130,11 +132,13 @@ def new_convert():
                     message = "Nam already taken."
                     apology(message)
 
-            db.execute("INSERT INTO new_convert(name, contact, location) VALUES(?, ?, ?, date('now'))", new["name"], new["contact"], new["location"])
+            db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
+                        new["name"], new["gender"], new["date_of_birth"], new["contact"], new["location"])
             return redirect("/convert")
 
         else:
-            db.execute("INSERT INTO new_convert(name, contact, location) VALUES(?, ?, ?, date('now'))", new["name"], new["contact"], new["location"])
+            db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
+                        new["name"], new["gender"], new["date_of_birth"], new["contact"], new["location"])
             return redirect("/convert")
 
     return render_template("add-new-convert.html")
@@ -164,7 +168,7 @@ def first_timer():
             return redirect("/vissitor")
 
         else:
-            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender) VALUES(?, ?, ?, ?, date('now'))",
+            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
              new["name"], new["contact"], new["location"], new["gender"])
             return redirect("/visitor")
 
