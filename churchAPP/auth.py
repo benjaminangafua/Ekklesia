@@ -1,4 +1,5 @@
 
+from crypt import methods
 from jinja2 import Template
 from flask import Flask, Blueprint, render_template, request, jsonify, redirect, flash
 import time
@@ -50,11 +51,28 @@ def signUp():
     return render_template("index17.html")     
 
 # Sign in
-@auth.route("/login")
+@auth.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        reg = db.execute("SELECT * FROM account;")
+        login = {}
+        login["mail"] = request.form.get("email")
+        login["code"] = int(request.form.get("code"))
+        login["password"] =request.form.get("password")
+        
+        for data in reg:
+            if data["email"] == login["mail"]:
+                print("==========||| email |||==============")
+                
+            if data["code"] == login["code"]:
+                print("==========||| code  |||==============", data["password"])
+            
+            if check_password_hash(data["password"], login["password"]):
+                print("==========||| password   |||==============")
+            return redirect("/home")
     return render_template('login.html')
 
 # Log out
 @auth.route("/logout")
-def logout():
+def logout(): 
     return render_template("logOut.html")

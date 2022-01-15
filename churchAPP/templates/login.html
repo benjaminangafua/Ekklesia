@@ -1,54 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>RegistrationForm_v1 by Colorlib</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
 
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-select.css')}}" />
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="../static/17/material-design-iconic-font.min.css">
 
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="../static/17/style17.css">
 </head>
 
 <body>
 
-    <div class="inner_page login">
-        <div class="full_container">
-            <div class="container">
-                <div class="center verticle_center full_height">
-                    <div class="login_section">
-                        <div class="login_form">
-                            <form>
-                                <fieldset>
-                                    <div class="field">
-                                        <label class="label_field">Email Address</label>
-                                        <input type="email" name="email" placeholder="E-mail" />
-                                    </div>
-                                    <div class="field">
-                                        <label class="label_field">Password</label>
-                                        <input type="password" name="password" placeholder="Password" />
-                                    </div>
-                                    <div class="field">
-                                        <label class="label_field hidden">hidden label</label>
-                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> Remember Me</label>
-                                        <a class="forgot" href="">Forgotten Password?</a>
-                                    </div>
-                                    <div class="field margin_0">
-                                        <label class="label_field hidden">hidden label</label>
-                                        <button class="main_bt">Sing In</button>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+    <div class="wrapper" style="background-image: url('../static/17/bg-registration-form-1.jpg');">
+        <div class="inner">
+            <div class="image-holder">
+                <img src="../static/17/registration-form-1.jpg" alt="">
             </div>
+            <form method="post">
+                <h3>Login Form</h3>
+                <div class="form-wrapper">
+                    <input type="email" name="email" placeholder="Email Address" class="form-control">
+                    <i class="zmdi zmdi-email"></i>
+                </div>
+                <div class="form-wrapper">
+                    <input type="text" name="code" placeholder="Code" class="form-control">
+
+                </div>
+                <div class="form-wrapper">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+                <div class="form-wrapper">
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control">
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+                <button style="background-color: rgb(3, 3, 68);" type="submit">Login
+						<i class="zmdi zmdi-arrow-right"></i>
+					</button>
+            </form>
         </div>
     </div>
 
 </body>
+<!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>

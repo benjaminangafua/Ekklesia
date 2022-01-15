@@ -169,35 +169,7 @@
                 <!-- end topbar -->
                 <!-- dashboard inner -->
                 <div class="midde_cont">
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                    <!-- Find sms -->
-                    {% if messages %}
-                    <!-- loop sms -->
-                    {% for category, message in messages %}
-                    <!-- endloop sms -->
-                    {% if category == "error" %}
-
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>{{message}}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
-                    </div>
-                    {% else %}
-
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>{{message}}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
-                    </div>
-                    <!-- endloop sms -->
-                    {% endif %}
-                    <!-- Find sms -->
-
-                    {% endfor %}
-                    <!-- Find sms -->
-
-                    {% endif %}
-                    <!-- Find sms -->
-
-                    {% endwith %} {% block innerContaint %} {% endblock %}
+                    {% block innerContaint %} {% endblock %}
 
                     <!-- footer -->
                     <div class="container-fluid text-warning">

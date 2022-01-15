@@ -3,7 +3,7 @@ from flask import Flask, Blueprint, render_template, request, jsonify, redirect,
 import time
 from churchAPP import db
 # account name """Need authentication"""
-churchName= db.execute("SELECT name FROM account")[2]["name"]
+churchName= db.execute("SELECT name FROM account")[0]["name"]
 
 MemberData = db.execute("SELECT * FROM members")
 
@@ -47,7 +47,7 @@ def home():
 
         newmember = db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)']
 
-        anniversary = db.execute("SELECT anniversary FROM account")[2]['anniversary']
+        anniversary = db.execute("SELECT anniversary FROM account")[0]['anniversary']
 
         # Member's Section
         return render_template("index.html", 
