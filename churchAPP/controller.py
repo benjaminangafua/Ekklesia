@@ -1,34 +1,11 @@
-from flask import Flask, Blueprint, render_template, request, jsonify, redirect
-# from sqlalchemy.sql.expression import join
+from distutils.log import error
+from flask import Flask, Blueprint, render_template, request, jsonify, redirect, flash
+import time
 from churchAPP import db
-from .email import sendMail
 # account name """Need authentication"""
 churchName= db.execute("SELECT name FROM account")[2]["name"]
 
-acc_name = []
 MemberData = db.execute("SELECT * FROM members")
-# Create church account
-def createChurchAccount():
-    data = db.execute("SELECT * FROM account")
-
-    if request.method == "POST":
-        churchData = {}
-        churchData["name"] = request.form.get("name")
-        churchData["mail"] = request.form.get("mail")
-        churchData["phone"] = request.form.get("phone")
-        churchData["bankNo"] = request.form.get("bankNo")
-        churchData["anniversary"] = request.form.get("anniversary")
-        acc_name.append(churchData["anniversary"])
-        churchData["code"] = int(request.form.get("code"))
-        if len(data) > 0:
-            for name in data:
-                if name["name"]==churchData["name"]:
-                    message =  "Church already exist"
-                    apology(message)
-        db.execute("INSERT INTO account(name, code, email, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?)",
-                    churchData["name"], churchData["code"], churchData["mail"], churchData["anniversary"], churchData["phone"],  churchData["bankNo"])
-        return redirect("/home")   
-    return render_template("create.church.html")     
 
 # landing page
 def home():
@@ -47,16 +24,16 @@ def home():
         birth = db.execute(f"SELECT strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day' FROM members")
         
         # Number of birthdays today
-        birth_day = []
+        birth_day = 0
         for day in birth:
             if int(day["Day"]) == today:
-               birth_day.append(len(day["Day"]))
+               birth_day= int(day["Day"])
 
         # Number of birthdays this month
-        birth_month = []
+        birth_month = 0
         for month in birth:
             if int(month["Month"]) == this_month:
-               birth_month.append(len(month["Month"]))
+               birth_month = int(month["Month"])
 
         # Attendance
         attendance = int(db.execute("SELECT total_attendance FROM attendance")[0]["total_attendance"])
@@ -74,7 +51,7 @@ def home():
 
         # Member's Section
         return render_template("index.html", 
-        birth_sum_today=birth_day[0], birth_sum_this_month=birth_month[0], newmember=newmember,anniversary=anniversary,
+        birth_sum_today=birth_day, birth_sum_this_month=birth_month, newmember=newmember,anniversary=anniversary,
         deparmentSum=deparmentSum, memberSum=memberSum, attendance=attendance,
          absence=absence, absent_percent=absent_percent, present_percent=present_percent,
          church=churchName)
@@ -102,8 +79,8 @@ def createMember():
         if len(data) > 0:
             for name in data:
                 if name["name"]==member_data["name"]:
-                    message =  "Name already exist"
-                    apology(message)
+                    flash("Name already exist.", category="error")
+
         db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
                        member_data["name"], member_data["location"], member_data["department"],  member_data["gender"], member_data["contact"], 
                        member_data["relationship"], member_data["occupation"], member_data["role_play"], member_data["date_of_birth"], member_data["weddingdate"])
@@ -129,8 +106,7 @@ def new_convert():
         if len(data) > 0:
             for name in data:
                 if name["name"]== new["name"]:
-                    message = "Nam already taken."
-                    apology(message)
+                    flash("Name already exist.", category="error")
 
             db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
                         new["name"], new["gender"], new["date_of_birth"], new["contact"], new["location"])
@@ -160,9 +136,8 @@ def first_timer():
         if len(data) > 0:
             for name in data:
                 if name["name"]== new["name"]:
-                    message = "Nam already taken."
-                    apology(message)
-
+                    flash("Name already exist.", category="error")
+                    
             db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
              new["name"], new["contact"], new["location"], new["gender"])
             return redirect("/vissitor")
@@ -202,8 +177,9 @@ def takeAttendance():
                 
         # Check for attendance is taken
         if not num:
-            message = "num field empty."
-            apology(message)
+            message = "n"
+            flash("Num field empty.", category="error")
+
             
         # Loop through the attendance , total_attendance=:total, total=totatl_attendance
         for name in num:
@@ -246,11 +222,10 @@ def notification():
     # db.execute("DELETE FROM offering WHERE id > 0")
     return render_template("notification.html", notifying=render_offering)
 
-def sendAccountName():
-    acc = db.execute("SELECT name FROM account")
-    for name, same in zip(acc, acc_name):
-        print(name, same)
-
+# def sendAccountName():
+#     acc = db.execute("SELECT name FROM account")
+#     for name, same in zip(acc, acc_name):
+#         print(name, same)
 
 # ------------------------------
 # communication | Finance

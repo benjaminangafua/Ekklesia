@@ -4,13 +4,10 @@ from jinja2 import Template
 from flask import Flask, Blueprint, render_template, request, jsonify, redirect
 # from sqlalchemy.sql.expression import join
 from churchAPP import db
-from .controller import notification, convert, payOffering, home,createMember, seeMember, new_convert, first_timer, visitors, birthday, weddingAnniversary, takeAttendance, createChurchAccount
+from .controller import notification, convert, payOffering, home,createMember, seeMember, new_convert, first_timer, visitors, birthday, weddingAnniversary, takeAttendance
 views = Blueprint('views', __name__)
 
 # Landing page
-@views.route("/", methods=["GET", "POST"])
-def registerChurch():
-    return createChurchAccount()
 
 
 # dashboard
@@ -86,16 +83,6 @@ def dashboard():
 @views.route('/email')
 def email():
     return render_template('email.html')
-
-# login
-@views.route('/login')
-def login():
-    return render_template('login.html')
-
-# sign-up
-@views.route('/sign-up')
-def signUp():
-    return render_template('signUp.html')
 
 # location
 @views.route('/map')
