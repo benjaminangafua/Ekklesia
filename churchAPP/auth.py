@@ -2,6 +2,7 @@
 from crypt import methods
 from jinja2 import Template
 from flask import Flask, Blueprint, render_template, request, jsonify, redirect, flash
+from flask_login import login_user, logout_user, login_required, current_user
 import time
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -39,6 +40,8 @@ def signUp():
             flash("Account was created!", category="success")
             
             time.sleep(4)
+            login_user(register["mail"], remember=True)
+
             return redirect("/login") 
         
         # Add account if not exist
@@ -47,6 +50,8 @@ def signUp():
         flash("Account was created!", category="success")
         
         time.sleep(4)
+        login_user(register["mail"], remember=True)
+
         return redirect("/login")       
     return render_template("index17.html")     
 
@@ -61,18 +66,15 @@ def login():
         login["password"] =request.form.get("password")
         
         for data in reg:
-            if data["email"] == login["mail"]:
-                print("==========||| email |||==============")
-                
-            if data["code"] == login["code"]:
-                print("==========||| code  |||==============", data["password"])
-            
-            if check_password_hash(data["password"], login["password"]):
+            if data["email"] == login["mail"] and data["code"] == login["code"] and check_password_hash(data["password"], login["password"]):
                 print("==========||| password   |||==============")
-            return redirect("/home")
+                login_user(data["email"], remember=True)
+                return redirect("/home")
     return render_template('login.html')
 
 # Log out
 @auth.route("/logout")
+@login_required
 def logout(): 
-    return render_template("logOut.html")
+    logout_user
+    return redirect("/login")
