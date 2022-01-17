@@ -1,12 +1,8 @@
 
-from os import path
-import os
 from flask import Flask
 from cs50 import SQL
 
 db = SQL('sqlite:///church.db')
-
-# db = SQL(os.getenv("DATABASE_URL"))
 
 def create_app():
     app = Flask(__name__)

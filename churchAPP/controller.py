@@ -1,7 +1,5 @@
-from distutils.log import error
-from flask import Flask, Blueprint, render_template, request, jsonify, redirect, flash
-import time
-from churchAPP import db
+from flask import render_template, request, redirect, flash
+from . import db
 # account name """Need authentication"""
 churchName= db.execute("SELECT name FROM account")[0]["name"]
 
@@ -221,6 +219,8 @@ def notification():
     render_offering = db.execute("SELECT * FROM offering ORDER BY pay_day DESC;")
     # db.execute("DELETE FROM offering WHERE id > 0")
     return render_template("notification.html", notifying=render_offering)
+
+
 
 # def sendAccountName():
 #     acc = db.execute("SELECT name FROM account")

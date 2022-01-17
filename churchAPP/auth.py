@@ -1,80 +1,110 @@
-
-from crypt import methods
-from jinja2 import Template
-from flask import Flask, Blueprint, render_template, request, jsonify, redirect, flash
-from flask_login import login_user, logout_user, login_required, current_user
-import time
+from flask import render_template, g, url_for, request, redirect, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
+import functools
 from . import db
+
+from flask import Blueprint
 
 auth = Blueprint("auth", __name__)
 
+# auth.secret_key = "hello"
+# auth.permanent_session_lifetime = timedelta(minutes=5)
+
 # sign-up
 @auth.route('/', methods=["GET", "POST"])
-def signUp():
+def registerAccount():
     # Create church account
     data = db.execute("SELECT * FROM account")
     if request.method == "POST":
-        register = {}
-        register["fullname"] = request.form.get("full_name")
-        register["mail"] = request.form.get("email")
-        register["code"] = request.form.get("code")
-        register["password"] =generate_password_hash(request.form.get("password"), "sha256")
-        register["phone"] = request.form.get("phone")
-        register["anniversary"] = request.form.get("anniversary")
-        register["account"] = request.form.get("account")
+        
+        fullname = request.form.get("full_name")
+        email = request.form.get("email")
+        code = request.form.get("code")
+        password =generate_password_hash(request.form.get("password"), "sha256")
+        phone = request.form.get("phone")
+        anniversary = request.form.get("anniversary")
+        account = request.form.get("account")
+
+        error = None
+        if not fullname:
+            error = "Invalid name"
         print(request.form.get("email"))
 
-        if len(register["fullname"]) < 2:
-            flash("Full name must be more than 2 characters.", category="error")
-        elif len(register["code"]) < 7:
-            flash("Password must be 7 characters or more.", category="error")
-
-        elif len(data) > 0:
+        if len(fullname) < 2:
+            error = "Full name must be more than 2 characters."
+        elif len(code) < 3:
+            error = "Password must be 7 characters or more."
+        
+        if len(data) > 0:
             for name in data:
-                if name["name"]==register["fullname"]:
-                    flash("Church already exist.", category="error")
+                if name["name"]==fullname:
+                    error = "Church already exist."
 
-            db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)",
-                        register["fullname"], register["code"], register["mail"], register["password"], register["phone"],  register["account"], register["anniversary"])
-            flash("Account was created!", category="success")
-            
-            time.sleep(4)
-            login_user(register["mail"], remember=True)
-
+            db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
             return redirect("/login") 
-        
         # Add account if not exist
-        db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)",
-                        register["fullname"], register["code"], register["mail"], register["password"], register["anniversary"], register["phone"],  register["account"])
-        flash("Account was created!", category="success")
+        db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, anniversary, phone,  account)
         
-        time.sleep(4)
-        login_user(register["mail"], remember=True)
+        flash(error, category="error") 
 
         return redirect("/login")       
     return render_template("index17.html")     
-
+  
 # Sign in
 @auth.route("/login", methods=["GET", "POST"])
-def login():
+def loginAccount():
     if request.method == "POST":
-        reg = db.execute("SELECT * FROM account;")
-        login = {}
-        login["mail"] = request.form.get("email")
-        login["code"] = int(request.form.get("code"))
-        login["password"] =request.form.get("password")
+        session.permanent=True
+
+        email = request.form.get("email")
+        code = int(request.form.get("code"))
+        password =request.form.get("password")
+                
+        if not email:
+            error = "Invalid email!"
+        if code:
+            error = "Invalid code!"
+        if not password:
+            error = "Invalid password!"
+
+        user = db.execute("SELECT * FROM account WHERE email=:mail", mail=email)[0]
+
+        if user is None:
+            error = "User not provided"
+        elif len(user) != 1 or not check_password_hash(user["password"], password):
+            error = "Invalid email and Passoword!"
+
+        session["user_id"] = user["id"]
+
+        flash(error, category="error")
+        print("last======")
+        return redirect("/home")
+
         
-        for data in reg:
-            if data["email"] == login["mail"] and data["code"] == login["code"] and check_password_hash(data["password"], login["password"]):
-                print("==========||| password   |||==============")
-                login_user(data["email"], remember=True)
-                return redirect("/home")
     return render_template('login.html')
 
+@auth.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = db.execute(
+            'SELECT * FROM account WHERE id = ?', (user_id,)
+        )[0]
+
 # Log out
-@auth.route("/logout")
-@login_required
 def logout(): 
-    logout_user
+    session.clear()
     return redirect("/login")
+
+# Log in required
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect("/login")
+        return view(**kwargs)
+
+    return wrapped_view
