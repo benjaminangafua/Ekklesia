@@ -1,12 +1,19 @@
-
+from datetime import timedelta
 from flask import Flask
+from flask_session import Session
 from cs50 import SQL
+from tempfile import mkdtemp
 
 db = SQL('sqlite:///church.db')
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'aglkghhfklahlhggakhfg'
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config["SESSION_FILE_DIR"] = mkdtemp()
+    app.config["SESSION_PERMANENT"] = False
+    app.permanent_session_lifetime = timedelta(minutes=5)
+    Session(app)
 
     # Initialize database
     

@@ -67,8 +67,8 @@ def loginAccount():
         if not password:
             error = "Invalid password!"
 
-        user = db.execute("SELECT * FROM account WHERE email=:mail", mail=email)[0]
-
+        user = db.execute("SELECT * FROM account WHERE email=:mail", mail=str(email))[0]
+        print(user)
         if user is None:
             error = "User not provided"
         elif len(user) != 1 or not check_password_hash(user["password"], password):
@@ -94,11 +94,6 @@ def load_logged_in_user():
             'SELECT * FROM account WHERE id = ?', (user_id,)
         )[0]
 
-# Log out
-def logout(): 
-    session.clear()
-    return redirect("/login")
-
 # Log in required
 def login_required(view):
     @functools.wraps(view)
@@ -108,3 +103,10 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+# Log out
+@auth.route("/logout")
+@login_required
+def logout(): 
+    session.pop("user_id",None)
+    return redirect("/login")
