@@ -4,3 +4,4 @@ jinja2
 psycopg2
 requests
 cs50
+flask_session
