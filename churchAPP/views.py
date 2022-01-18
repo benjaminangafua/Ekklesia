@@ -90,10 +90,12 @@ def createMember():
                 if row["name"]==name:
                     flash("Name already exist.", category="error")
 
+            db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
+                       name, location, department,  gender, contact, 
+                       relationship, occupation, role_play, date_of_birth, weddingdate)
         db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
                        name, location, department,  gender, contact, 
                        relationship, occupation, role_play, date_of_birth, weddingdate)
-        
         return redirect("/home")
     return render_template('add-new-member.html')
 
@@ -125,10 +127,9 @@ def new_convert():
                         name, gender, date_of_birth, contact, location)
             return redirect("/convert")
 
-        else:
-            db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
+        db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
                         name, gender, date_of_birth, contact, location)
-            return redirect("/convert")
+        return redirect("/convert")
 
     return render_template("add-new-convert.html")
 
@@ -153,15 +154,15 @@ def first_timer():
             for row in data:
                 if row["name"]== name:
                     flash("Name already exist.", category="error")
-                    
+            # Add first timer to existing data
             db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
              name, contact, location, gender)
             return redirect("/vissitor")
-
-        else:
-            db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
+            
+        # Add new first timer
+        db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
              name, contact, location, gender)
-            return redirect("/visitor")
+        return redirect("/visitor")
 
     return render_template("add-first-timers.html")
 
@@ -203,14 +204,11 @@ def takeAttendance():
                 
         # Check for attendance is taken
         if not num:
-            message = "n"
             flash("Num field empty.", category="error")
-
-            
         # Loop through the attendance , total_attendance=:total, total=totatl_attendance
         for name in num:
             db.execute("UPDATE attendance SET name=:name, total_attendance=:total, date=date('now') WHERE id >= 0",total=totatl_attendance,  name=name)
-        
+            return redirect("/home")
     member_names = db.execute("SELECT DISTINCT(name), id FROM members")
 
     return render_template("new-attendance.html", member_names=member_names)
@@ -257,9 +255,8 @@ def payOffering():
             db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
             return redirect("/home")
 
-        else:
-            db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
-            return redirect("/home")
+        db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
+        return redirect("/home")
     
     return render_template("offering.html", church=churchName())
 

@@ -14,7 +14,7 @@ auth = Blueprint("auth", __name__)
 @auth.route('/', methods=["GET", "POST"])
 def registerAccount():
     # Create church account
-    data = db.execute("SELECT * FROM account WHERE id = ?", session["user_id"])[0]
+    data = db.execute("SELECT * FROM account")
     if request.method == "POST":
         
         fullname = request.form.get("full_name")
@@ -41,12 +41,11 @@ def registerAccount():
         
         # Add account if not exist
         if len(data) > 0:
-            if data["name"]==fullname:
-                error = "Church already exist."
+            for row in data:
+                if row["name"]== fullname:
+                    error = "Church already exist."
             db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
             return redirect("/login") 
-
-        
         db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, anniversary, phone,  account)
         
         flash(error, category="error") 
