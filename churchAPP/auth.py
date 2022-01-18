@@ -48,7 +48,7 @@ def registerAccount():
         flash(error, category="error") 
 
         return redirect("/login")       
-    return render_template("index17.html")     
+    return render_template("register.html")     
   
 # Sign in
 @auth.route("/login", methods=["GET", "POST"])
