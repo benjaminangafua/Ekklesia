@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="../static/images/logo/logo.png" type="image/x-icon">
     <!-- STYLE CSS -->
     <link rel="stylesheet" href="../static/17/style17.css">
+
 </head>
 
 <body>
@@ -26,35 +27,36 @@
             <form method="post">
                 <h3>Registration Form</h3>
                 <div class="form-wrapper">
-                    <input type="text" name="full_name" placeholder="Church Name" class="form-control">
+                    <input type="text" name="full_name" placeholder="Church Name" class="form-control" required>
                     <i class="zmdi zmdi-account"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="email" name="email" placeholder="Email Address" class="form-control">
+                    <input type="email" name="email" placeholder="Email Address" class="form-control" required>
                     <i class="zmdi zmdi-email"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="text" name="phone" placeholder="Phone" class="form-control">
+                    <input type="text" name="phone" placeholder="Phone" class="form-control" required>
+                    <i class="zmdi zmdi-phone-sip"></i>
+                </div>
+                <div class="form-wrapper">
+                    <input type="text" name="account" placeholder="Bank Account" class="form-control" required>
 
                 </div>
                 <div class="form-wrapper">
-                    <input type="text" name="account" placeholder="Bank Account" class="form-control">
+                    <input type="text" name="code" placeholder="Code" class="form-control" required>
+                    <i class="zmdi zmdi-pin-account"></i>
 
                 </div>
                 <div class="form-wrapper">
-                    <input type="text" name="code" placeholder="Code" class="form-control">
+                    <input type="date" name="anniversary" placeholder="Anniversary's Date" class="form-control" required>
 
                 </div>
                 <div class="form-wrapper">
-                    <input type="date" name="anniversary" placeholder="Anniversary's Date" class="form-control">
-
-                </div>
-                <div class="form-wrapper">
-                    <input type="password" name="password" placeholder="Password" class="form-control">
+                    <input type="password" name="password" placeholder="Password" class="form-control" required>
                     <i class="zmdi zmdi-lock"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control">
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control" required>
                     <i class="zmdi zmdi-lock"></i>
                 </div>
                 <button style="background-color: rgb(3, 3, 68);" type="submit">Register

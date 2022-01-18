@@ -19,7 +19,6 @@
         <div class="inner">
             <div class="image-holder">
                 <img src="../static/17/registration-form-1.jpg" alt="">
-                <div style="font-size:large;">If you don't have an account<a style="text-decoration: none;" href="/"><em>Rgeister</em></a>.</div>
 
             </div>
             <form method="post">
@@ -30,7 +29,7 @@
                 </div>
                 <div class="form-wrapper">
                     <input type="text" name="code" placeholder="Code" class="form-control" required>
-
+                    <i class="zmdi zmdi-pin-account"></i>
                 </div>
                 <div class="form-wrapper">
                     <input type="password" name="password" placeholder="Password" class="form-control" required>
@@ -40,9 +39,14 @@
                     <input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control" required>
                     <i class="zmdi zmdi-lock"></i>
                 </div>
+                <div>
+                    <div style="font-size:large;">If you don't have an account <a style="text-decoration: none;" href="/"><b><em>register</em></b></a>.</div>
+
+                </div>
                 <button style="background-color: rgb(3, 3, 68);" type="submit">Login
 						<i class="zmdi zmdi-arrow-right"></i>
 					</button>
+
             </form>
         </div>
     </div>
