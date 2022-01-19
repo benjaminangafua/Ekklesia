@@ -11,7 +11,7 @@ auth = Blueprint("auth", __name__)
 # auth.permanent_session_lifetime = timedelta(minutes=5)
 
 # sign-up
-@auth.route('/', methods=["GET", "POST"])
+@auth.route('/register', methods=["GET", "POST"])
 def registerAccount():
     # Create church account
     data = db.execute("SELECT * FROM account")
@@ -85,7 +85,7 @@ def loginAccount():
 
         flash(error, category="error")
         print("last======")
-        return redirect("/home")
+        return redirect("/dashboard")
 
         
     return render_template('login.html')

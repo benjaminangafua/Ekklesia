@@ -11,8 +11,8 @@ def create_app():
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config["SESSION_FILE_DIR"] = mkdtemp()
-    app.config["SESSION_PERMANENT"] = False
-    app.permanent_session_lifetime = timedelta(minutes=5)
+    app.config["SESSION_PERMANENT"] = True
+    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=3)
     Session(app)
 
     # Initialize database

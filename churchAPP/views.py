@@ -14,8 +14,12 @@ def anniversaryFound():
 
 MemberData = db.execute("SELECT * FROM members")
 
+# landing page
+@views.route("/")
+def landingPage():
+    return render_template("landing-index.html")
 # dashboard
-@views.route("/home")
+@views.route("/dashboard")
 @login_required
 def home():
     # Birthday's section
@@ -59,13 +63,13 @@ def home():
         anniversary = db.execute(f"SELECT anniversary FROM account WHERE id ={anniversaryFound()}")[0]['anniversary']
 
         # Member's Section
-        return render_template("index.html", 
+        return render_template("dashboard-index.html", 
         birth_sum_today=birth_day, birth_sum_this_month=birth_month, newmember=newmember,anniversary=anniversary,
         deparmentSum=deparmentSum, memberSum=memberSum, attendance=attendance,
          absence=absence, absent_percent=absent_percent, present_percent=present_percent,
          church=churchName())
     
-    return render_template("index.html", deparmentSum=deparmentSum, memberSum=memberSum)
+    return render_template("dashboard-index.html", deparmentSum=deparmentSum, memberSum=memberSum)
 
 # create New member
 @views.route('/add-new-member', methods=["GET", "POST"])
@@ -96,7 +100,7 @@ def createMember():
         db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
                        name, location, department,  gender, contact, 
                        relationship, occupation, role_play, date_of_birth, weddingdate)
-        return redirect("/home")
+        return redirect("/dashboard")
     return render_template('add-new-member.html')
 
 # Display members
@@ -208,7 +212,7 @@ def takeAttendance():
         # Loop through the attendance , total_attendance=:total, total=totatl_attendance
         for name in num:
             db.execute("UPDATE attendance SET name=:name, total_attendance=:total, date=date('now') WHERE id >= 0",total=totatl_attendance,  name=name)
-            return redirect("/home")
+            return redirect("/dashboard")
     member_names = db.execute("SELECT DISTINCT(name), id FROM members")
 
     return render_template("new-attendance.html", member_names=member_names)
@@ -223,7 +227,7 @@ def contact():
 @views.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('index.html')
+    return render_template('dashboard-index.html')
 
 # use's -profie
 @views.route('/profile')
@@ -251,12 +255,12 @@ def payOffering():
             for row in data:
                 if row["name"]== name:
                     db.execute("UPDATE offering SET member_name=:name, amount=:amount, number=number, pay_day=date('now') WHERE id >= 0",name= name, amount=amount, number=number)
-                    return redirect("/home")
+                    return redirect("/dashboard")
             db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
-            return redirect("/home")
+            return redirect("/dashboard")
 
         db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
-        return redirect("/home")
+        return redirect("/dashboard")
     
     return render_template("offering.html", church=churchName())
 
