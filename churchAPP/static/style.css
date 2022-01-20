@@ -63,9 +63,8 @@
     2. import files
 -------------------------------------------------------------------*/
 
-@import url(css/animate.css);
-@import url(css/flaticon.css);
-@import url(css/font-awesome.min.css);
+@import url(./css/animate.css);
+@import url(./css/flaticon.css);
 
 /*------------------------------------------------------------------
     3. basic
@@ -490,11 +489,11 @@ a:focus {
 }
 
 .orange_color {
-    color: #ff5722 !important;
+    color: #F09608 !important;
 }
 
 .orange_bg {
-    background: #ff5722 !important;
+    background: #F09608 !important;
 }
 
 .purple_color {
@@ -567,7 +566,7 @@ a:focus {
     font-weight: 400;
     margin: 0;
     padding-left: 0;
-    color: #02153f;
+    color: navy;
     letter-spacing: 0px;
 }
 
@@ -639,7 +638,7 @@ a:focus {
     width: 100%;
     padding-left: 280px;
     z-index: 2;
-    background: #02153f;
+    background: navy;
     top: 0;
     transition: ease all 0.3s;
     left: 0;
@@ -733,7 +732,7 @@ a:focus {
 .icon_info ul.user_profile_dd>li {
     width: auto;
     border-radius: 0;
-    background: #ff5722;
+    background: #F09608;
     margin: 0;
     padding: 12px 0 12px 20px;
     height: auto;
@@ -744,7 +743,7 @@ a:focus {
     color: #000;
     padding: 14px 26px 14px;
     font-size: 21px;
-    background: #ff5722;
+    background: #F09608;
     margin-right: 0;
     cursor: pointer;
     float: left;
@@ -757,7 +756,7 @@ a:focus {
     position: absolute;
     right: -2px;
     top: -7px;
-    background: #ff5722;
+    background: #F09608;
     border-radius: 100%;
     color: #fff;
     font-weight: 600;
@@ -767,7 +766,7 @@ a:focus {
 
 .icon_info ul.user_profile_dd li div a {
     font-size: 15px;
-    color: #02153f;
+    color: navy;
     padding: 4px 15px;
     border-bottom: none;
     line-height: normal;
@@ -775,7 +774,7 @@ a:focus {
 
 .icon_info ul.user_profile_dd li div a span {
     font-size: 13px;
-    color: #02153f;
+    color: navy;
     font-weight: normal;
     padding: 0;
     transition: all .3s ease-in-out;
@@ -837,7 +836,7 @@ span {
 #sidebar {
     min-width: 280px;
     max-width: 280px;
-    background-color: #02153f;
+    background-color: #070122;
     color: #fff;
     transition: all 0.3s;
     position: relative;
@@ -892,7 +891,7 @@ span {
 }
 
 #sidebar ul.components ul {
-    background: #214162;
+    background: #070122;
     padding: 20px 0;
 }
 
@@ -948,7 +947,7 @@ a[data-toggle="collapse"] {
 .page_title h2 {
     font-size: 20px;
     font-weight: 500;
-    color: #02153f;
+    color: navy;
 }
 
 #sidebar.active+#content {
@@ -957,7 +956,7 @@ a[data-toggle="collapse"] {
 
 .topbar .navbar {
     padding: 0;
-    background: #02153f;
+    background: #070122;
     border: none;
     border-radius: 0;
 }
@@ -968,7 +967,7 @@ a[data-toggle="collapse"] {
 
 .sidebar_user_info {
     padding: 15px 25px;
-    background: #214162;
+    background: #070122;
 }
 
 .user_img img {
@@ -1062,13 +1061,13 @@ a[data-toggle="collapse"] {
 }
 
 #sidebar h4 {
-    background: #02153f;
+    background: navy;
     margin: 0;
     padding: 21px 25px 19px;
     font-weight: 500;
     font-size: 18px;
     color: #fff;
-    border-bottom: solid #ff5722 1px;
+    border-bottom: solid #F09608 1px;
 }
 
 
@@ -1248,7 +1247,7 @@ a[data-toggle="collapse"] {
     background: #fff;
     padding: 15px 25px;
     margin: 20px 0 0 0;
-    border-bottom: solid #ff5722 2px;
+    border-bottom: solid #F09608 2px;
 }
 
 .heading2 h3 {
@@ -1256,7 +1255,7 @@ a[data-toggle="collapse"] {
     text-transform: none;
     font-weight: 600;
     position: relative;
-    color: #02153f;
+    color: navy;
     font-family: 'Raleway', sans-serif;
 }
 
@@ -1371,7 +1370,7 @@ a[data-toggle="collapse"] {
 }
 
 .table_format.strp thead th {
-    background: #02153f;
+    background: navy;
     border: none;
     color: #fff;
     vertical-align: middle;
@@ -1438,7 +1437,7 @@ a[data-toggle="collapse"] {
 }
 
 .dark_bg {
-    background: #214162;
+    background: #070122;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
     margin-top: 0;
@@ -1481,7 +1480,7 @@ a[data-toggle="collapse"] {
 }
 
 .tw .social_icon {
-    background: #02153f;
+    background: navy;
 }
 
 .linked .social_icon {
@@ -1642,7 +1641,7 @@ a[data-toggle="collapse"] {
 #testimonial_slider.carousel .carousel-control i {
     font-size: 20px;
     margin-right: 2px;
-    color: #02153f;
+    color: navy;
     margin-top: -2px;
 }
 
@@ -1690,7 +1689,7 @@ a[data-toggle="collapse"] {
     border-radius: 5px 5px 0 0;
     padding: 35px 45px 32px;
     background-size: cover;
-    background-color: #214162;
+    background-color: #070122;
     position: relative;
 }
 
@@ -1779,7 +1778,7 @@ button.main_bt {
 
 .main_bt:hover,
 .main_bt:focus {
-    background: #ff5722;
+    background: #F09608;
     color: #fff;
 }
 
@@ -1983,7 +1982,7 @@ button.main_bt {
     text-align: center;
     font-size: 14px;
     font-weight: 300;
-    color: #214162;
+    color: #070122;
     padding: 25px 15px;
 }
 
@@ -2025,7 +2024,7 @@ button.main_bt {
 
 .info_people .user_info_cont p.p_status {
     font-weight: 600;
-    color: #ff5722;
+    color: #F09608;
     margin-top: 10px;
 }
 
@@ -2035,7 +2034,7 @@ button.main_bt {
 
 .widget_progress_bar .progress_no {
     font-size: 24px;
-    color: #02153f;
+    color: navy;
     font-weight: 500;
     line-height: normal;
     margin: 0;
@@ -2151,7 +2150,7 @@ i.icon {
 -------------------------------------------------------------------*/
 
 .link.today {
-    background: #ff5722;
+    background: #F09608;
     color: #fff;
     font-weight: 600;
 }
@@ -2190,9 +2189,9 @@ i.icon {
 /** tabbar style 2 **/
 
 .tab_style2 .tabbar nav div.nav-tabs .nav-link.active {
-    background: #ff5722;
+    background: #F09608;
     color: #fff;
-    border-color: #ff5722;
+    border-color: #F09608;
 }
 
 
@@ -2215,9 +2214,9 @@ i.icon {
 }
 
 .tab_style3 div.tabbar div.nav-pills .nav-link.active {
-    background: #ff5722;
+    background: #F09608;
     color: #fff;
-    border-color: #ff5722;
+    border-color: #F09608;
 }
 
 
@@ -2290,7 +2289,7 @@ i.icon {
 
 .heading_section {
     border-top: solid #1ed085 2px;
-    background: #02153f;
+    background: navy;
 }
 
 .heading_section h4 {
@@ -2365,7 +2364,7 @@ h2.invoice_head small {
 }
 
 .invoice_blog h4 {
-    color: #02153f;
+    color: navy;
     background: #f8f8f8;
     padding: 15px 20px;
     font-weight: 400;
@@ -2380,7 +2379,7 @@ h2.invoice_head small {
 
 .invoice_blog p strong {
     font-weight: 500;
-    color: #02153f;
+    color: navy;
 }
 
 .table_row thead {
@@ -2390,7 +2389,7 @@ h2.invoice_head small {
 .table_row thead tr {
     border: none;
     background: #f8f8f8;
-    color: #02153f;
+    color: navy;
 }
 
 .table_row thead tr th {
@@ -2398,7 +2397,7 @@ h2.invoice_head small {
     font-size: 15px;
     font-weight: 500;
     padding: 14px 25px 14px;
-    color: #02153f;
+    color: navy;
     text-transform: uppercase;
 }
 
@@ -2504,7 +2503,7 @@ p.note_cont {
 }
 
 .mail-box .sm-side .user-head {
-    background: #214162;
+    background: #070122;
     border-radius: 0;
     color: #fff;
     min-height: 80px;
@@ -2577,7 +2576,7 @@ a.mail-dropdown {
 }
 
 .btn-compose:hover {
-    background: #ff5722;
+    background: #F09608;
     color: #fff;
 }
 
@@ -2626,7 +2625,7 @@ ul.inbox-nav li a {
 ul.inbox-nav li a:hover,
 ul.inbox-nav li.active a,
 ul.inbox-nav li a:focus {
-    background: #214162;
+    background: #070122;
     color: #fff;
 }
 
@@ -2712,7 +2711,7 @@ ul.labels-info li a i {
     padding-top: 3px;
     text-transform: none;
     letter-spacing: 0;
-    color: #02153f;
+    color: navy;
     font-size: 21px;
 }
 
@@ -2730,7 +2729,7 @@ ul.labels-info li a i {
 }
 
 .inbox-head .sr-btn {
-    background: #ff5722;
+    background: #F09608;
     border: medium none;
     border-radius: 0;
     color: #fff;
@@ -3251,7 +3250,7 @@ table.projects tr td:first-child {
 }
 
 .table.projects thead.thead-dark th {
-    background: #02153f;
+    background: navy;
     font-weight: 300;
     padding: 15px 15px;
 }
@@ -3380,7 +3379,7 @@ table.projects tr td:first-child {
     margin: 11px 0;
     position: relative;
     left: 0;
-    color: #ff5722;
+    color: #F09608;
 }
 
 

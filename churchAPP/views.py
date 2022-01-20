@@ -13,10 +13,11 @@ def anniversaryFound():
     return sid
 
 MemberData = db.execute("SELECT * FROM members")
-
+landingData = {}
 # landing page
 @views.route("/")
 def landingPage():
+
     return render_template("landing-index.html")
 # dashboard
 @views.route("/dashboard")
@@ -28,7 +29,6 @@ def home():
     # Department's Section
     deparmentSum = db.execute('SELECT COUNT(DISTINCT(department)) FROM members')[0]['COUNT(DISTINCT(department))']
 
-    
     if len(MemberData) > 0:
         # Birthday entry
         this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
@@ -61,6 +61,18 @@ def home():
         newmember = db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)']
 
         anniversary = db.execute(f"SELECT anniversary FROM account WHERE id ={anniversaryFound()}")[0]['anniversary']
+
+        landingData["birth_sum_today"]=birth_day
+        landingData["birth_sum_this_month"]=birth_month
+        landingData["newmember"]=newmember
+        landingData["anniversary"]=anniversary
+        landingData["deparmentSum"]=deparmentSum
+        landingData["memberSum"]=memberSum
+        landingData["attendance"]=attendance,
+        landingData["absence"]=absence
+        landingData["absent_percent"]=absent_percent
+        landingData["present_percent"]=present_percent
+        landingData["church"]=churchName()
 
         # Member's Section
         return render_template("dashboard-index.html", 
@@ -176,7 +188,6 @@ def first_timer():
 def visitors():
     visitors_name = db.execute("SELECT * FROM first_time_visitors ORDER BY id")
     return render_template("first-time-visitor.html", visitors_name=visitors_name)
-
 
 # Birthday list
 @views.route("/birthday")

@@ -205,12 +205,12 @@ body {
 }
 
 ::selection {
-    background: #f5a425;
+    background: #F09608;
     color: #fff;
 }
 
 ::-moz-selection {
-    background: #f5a425;
+    background: #F09608;
     color: #fff;
 }
 
@@ -234,7 +234,7 @@ body {
 .main-button-red a {
     font-size: 13px;
     color: #fff;
-    background-color: #a12c2f;
+    background-color: navy;
     padding: 12px 30px;
     display: inline-block;
     border-radius: 22px;
@@ -250,7 +250,7 @@ body {
 .main-button-yellow a {
     font-size: 13px;
     color: #fff;
-    background-color: #f5a425;
+    background-color: #F09608;
     padding: 12px 30px;
     display: inline-block;
     border-radius: 22px;
@@ -311,12 +311,12 @@ header
 }
 
 .sub-header .right-icons ul li a:hover {
-    color: #f5a425;
+    color: #F09608;
 }
 
 .sub-header .left-content p em {
     font-style: normal;
-    color: #f5a425;
+    color: #F09608;
 }
 
 .background-header {
@@ -426,12 +426,12 @@ header
 
 .header-area .main-nav .nav li:hover a,
 .header-area .main-nav .nav li a.active {
-    color: #f5a425!important;
+    color: #F09608!important;
 }
 
 .background-header .main-nav .nav li:hover a,
 .background-header .main-nav .nav li a.active {
-    color: #f5a425!important;
+    color: #F09608!important;
     opacity: 1;
 }
 
@@ -493,7 +493,7 @@ header
 
 .header-area .main-nav .nav li.has-sub ul li a:hover {
     background: #fff;
-    color: #f5a425!important;
+    color: #F09608!important;
     padding-left: 25px;
 }
 
@@ -633,7 +633,7 @@ header
 }
 
 .header-area.header-sticky .nav li a.active {
-    color: #f5a425;
+    color: #F09608;
 }
 
 @media (max-width: 1200px) {
@@ -652,7 +652,7 @@ header
     }
     .header-area.header-sticky .nav li a:hover,
     .header-area.header-sticky .nav li a.active {
-        color: #f5a425!important;
+        color: #F09608!important;
         opacity: 1;
     }
     .header-area.header-sticky .nav li.search-icon a {
@@ -710,7 +710,7 @@ header
     }
     .header-area .main-nav .nav li a:hover {
         background: #eee !important;
-        color: #f5a425!important;
+        color: #F09608!important;
     }
     .header-area .main-nav .nav li.has-sub ul.sub-menu {
         position: relative;
@@ -816,7 +816,7 @@ banner
 
 .main-banner .caption h2 em {
     font-style: normal;
-    color: #f5a425;
+    color: #F09608;
     font-weight: 900;
 }
 
@@ -853,10 +853,7 @@ services
 }
 
 .services .item {
-    background-image: url(../images/img/service-item-bg.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    background-color: navy;
     border-radius: 20px;
     text-align: center;
     color: #fff;
@@ -1004,7 +1001,7 @@ section.upcoming-meetings .categories ul li a {
 }
 
 section.upcoming-meetings .categories ul li a:hover {
-    color: #a12c2f;
+    color: navy;
 }
 
 section.upcoming-meetings .categories .main-button-red {
@@ -1064,7 +1061,7 @@ section.upcoming-meetings .categories .main-button-red a {
     font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;
-    color: #a12c2f;
+    color: navy;
 }
 
 .meeting-item .down-content .date span {
@@ -1161,7 +1158,7 @@ section.apply-now .item p {
 }
 
 .accordion-head.is-open {
-    color: #f5a425;
+    color: #F09608;
     border-bottom: none;
 }
 
@@ -1220,12 +1217,12 @@ section.our-courses {
 }
 
 .our-courses .item .down-content .info ul li i {
-    color: #f5a425;
+    color: #F09608;
     font-size: 14px;
 }
 
 .our-courses .item .down-content .info span {
-    color: #a12c2f;
+    color: navy;
     font-size: 15px;
     font-weight: 600;
     text-align: right;
@@ -1369,7 +1366,7 @@ section.our-facts h2 {
 
 .count-digit {
     margin: 5px 0px;
-    color: #f5a425;
+    color: #F09608;
     font-weight: 700;
     font-size: 36px;
 }
@@ -1466,7 +1463,7 @@ section.contact-us #contact textarea {
 section.contact-us #contact button {
     font-size: 13px;
     color: #fff;
-    background-color: #a12c2f;
+    background-color: navy;
     padding: 12px 30px;
     display: inline-block;
     border-radius: 22px;
@@ -1482,7 +1479,7 @@ section.contact-us #contact button:hover {
 }
 
 section.contact-us .right-info {
-    background-color: #a12c2f;
+    background-color: navy;
     border-radius: 20px;
     padding: 40px;
 }
@@ -1528,7 +1525,7 @@ section.contact-us .right-info ul li span {
 }
 
 .footer p a {
-    color: #f5a425;
+    color: #F09608;
 }
 
 
@@ -1591,7 +1588,7 @@ section.meetings-page .filters {
 
 section.meetings-page .filters li {
     font-size: 13px;
-    color: #a12c2f;
+    color: navy;
     background-color: #fff;
     padding: 11px 30px;
     display: inline-block;
@@ -1605,7 +1602,7 @@ section.meetings-page .filters li {
 
 section.meetings-page .filters ul li.active,
 section.meetings-page .filters ul li:hover {
-    background-color: #a12c2f;
+    background-color: navy;
     color: #fff;
 }
 
@@ -1646,7 +1643,7 @@ section.meetings-page .main-button-red a {
 
 section.meetings-page .pagination ul li.active a,
 section.meetings-page .pagination ul li a:hover {
-    background-color: #a12c2f;
+    background-color: navy;
     color: #fff;
 }
 
@@ -1697,7 +1694,7 @@ section.meetings-page .pagination ul li a:hover {
     font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;
-    color: #a12c2f;
+    color: navy;
 }
 
 .meeting-single-item .thumb .date span {
@@ -1760,7 +1757,7 @@ section.meetings-page .pagination ul li a:hover {
 }
 
 .meeting-single-item .down-content .share ul li a:hover {
-    color: #f5a425;
+    color: #F09608;
 }
 
 
