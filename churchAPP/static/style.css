@@ -890,14 +890,15 @@ span {
     position: relative;
 }
 
-#sidebar ul.components ul {
-    background: #070122;
+#sidebar ul.components ul a {
+    background: #ff9800 !important;
+    color: black;
+    font-weight: bold;
     padding: 20px 0;
 }
 
 #sidebar ul.components ul li a {
     font-size: 13px;
-    color: rgba(255, 255, 255, .7);
     padding: 7px 35px;
 }
 
