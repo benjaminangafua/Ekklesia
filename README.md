@@ -62,4 +62,7 @@ A Church Management System (Ekklesia) for connecting administartors and members 
 # Who to use it?
  - Currently it's used for church administrator for church growth and provide need for members outreach.
 
-## Technology used
+# Technology used
+- Framework: 
+- Template : 
+- Backend: 
