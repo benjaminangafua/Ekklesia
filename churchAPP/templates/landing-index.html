@@ -63,19 +63,23 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                            <li><a href="meetings.html">Events</a></li>
-                            <li class="scroll-to-section"><a href="#apply">Apply Now</a></li>
+                            <li><a href="#">Ministry</a></li>
+
+                            <li class="scroll-to-section"><a href="#sunday-service">Join Us</a></li>
                             <li class="has-sub">
-                                <a href="javascript:void(0)">Pages</a>
+                                <a href="javascript:void(0)">Events</a>
                                 <ul class="sub-menu">
-                                    <li><a href="meetings.html">Upcoming Events</a></li>
-                                    <li><a href="meeting-details.html">Meeting Details</a></li>
+                                    <li><a href="#">Birthday</a></li>
+                                    <li><a href="#">Wedding</a></li>
+                                    <li><a href="#">Church Anniversary</a></li>
+                                    <li><a href="#">Mother's Day</a></li>
+                                    <li><a href="#">Father's Day</a></li>
                                 </ul>
                             </li>
-                            <li class="scroll-to-section"><a href="#courses">Courses</a></li>
+                            <li class="scroll-to-section"><a href="#courses">Teaching</a></li>
+                            <li class="scroll-to-section"><a href="#give">Give</a></li>
                             <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
-                            <li class="scroll-to-section"><a href="/login">Login</a></li>
-                            <li class="scroll-to-section"><a href="/register">Register</a></li>
+                            <li><a href="/login">Login</a></li>
                         </ul>
                         <a class='menu-trigger' href="#">
                             <span>Menu</span>
@@ -90,18 +94,17 @@ https://templatemo.com/tm-569-edu-meeting -->
 
     <!-- ***** Main Banner Area Start ***** -->
     <section class="section main-banner" id="top" data-section="section1">
-        <video autoplay muted loop id="bg-video">
-          <source src="{{ url_for('static', filename='images/img/course-video.mp4') }}" type="video/mp4" />
+        <video autoplay muted loop id="bg-video" src="{{ url_for('static', filename='images/img/course-video.mp4') }}" type="video/mp4">
       </video>
-
         <div class="video-overlay header-text">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="caption">
                             <h6>Hello Fellow Believer</h6>
-                            <h2>Welcome to Church</h2>
-                            <p>This is a church overview platform. The background video is taken from Pexels website, a group of young people by <a rel="nofollow" href="https://www.pexels.com/@pressmaster" target="_blank">Pressmaster</a>.</p>
+                            <h2>Welcome to Ekklesia of The Lord</h2>
+                            <p>Connecting people to Jesus and one another.</p>
+                            <p>Join our everlasting commity as we await our Lord and avior Jesus Christ.</p>
                             <div class="main-button-red">
                                 <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
                             </div>
@@ -123,9 +126,9 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="icon">
                                 <img src="{{ url_for('static', filename='images/img/service-icon-01.png') }}" alt="">
                             </div>
-                            <div class="down-content">
-                                <h4>Best Education</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                            <div class="down-content text-start">
+                                <h4>Meet Our Men Ministry</h4>
+                                <p>The men serve the needs of the society with ministry to places identified by their pastor(s).</p>
                             </div>
                         </div>
 
@@ -133,9 +136,10 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="icon">
                                 <img src="{{ url_for('static', filename='images/img/service-icon-02.png') }}" alt="">
                             </div>
-                            <div class="down-content">
-                                <h4>Best Teachers</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                            <div class="down-content text-start">
+                                <h4>Meet Our Women Ministry</h4>
+
+                                <p>A growing ministry which centers on meeting the spiritual needs of members to grow their faith in Jesus Christ. </p>
                             </div>
                         </div>
 
@@ -143,9 +147,9 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="icon">
                                 <img src="{{ url_for('static', filename='images/img/service-icon-03.png') }}" alt="">
                             </div>
-                            <div class="down-content">
-                                <h4>Best Students</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                            <div class="down-content text-start">
+                                <h4>Meet Our Usher Ministry</h4>
+                                <p>The Lord uses them for seating guests and maintaining the order and security of His service.</p>
                             </div>
                         </div>
 
@@ -153,9 +157,9 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="icon">
                                 <img src="{{ url_for('static', filename='images/img/service-icon-02.png') }}" alt="">
                             </div>
-                            <div class="down-content">
-                                <h4>Online Meeting</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                            <div class="down-content text-start">
+                                <h4>Meet Our Music Ministry</h4>
+                                <p>This ministry is amazing in encouraging believers, supporting the sermon, praising and worshipping God</p>
                             </div>
                         </div>
 
@@ -163,9 +167,9 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="icon">
                                 <img src="{{ url_for('static', filename='images/img/service-icon-03.png') }}" alt="">
                             </div>
-                            <div class="down-content">
-                                <h4>Best Networking</h4>
-                                <p>Suspendisse tempor mauris a sem elementum bibendum. Praesent facilisis massa non vestibulum.</p>
+                            <div class="down-content text-start">
+                                <h4>Meet Our Youth Ministry</h4>
+                                <p>The strongest ministry! They support the service of God in all ways as they gare to succeed the old.</p>
                             </div>
                         </div>
 
@@ -180,21 +184,22 @@ https://templatemo.com/tm-569-edu-meeting -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>Upcoming Meetings</h2>
+                        <h2>Weekly Activities</h2>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="categories">
-                        <h4>Meeting Catgories</h4>
+                    <div class="categories" id="sunday-service">
+                        <h4>Sunday Service</h4>
                         <ul>
-                            <li><a href="#">Sed tempus enim leo</a></li>
-                            <li><a href="#">Aenean molestie quis</a></li>
-                            <li><a href="#">Cras et metus vestibulum</a></li>
-                            <li><a href="#">Nam et condimentum</a></li>
-                            <li><a href="#">Phasellus nec sapien</a></li>
+                            <li>First Serivce <br> 8:00 a.m. - 10:00 a.m.
+                            </li>
+                            <li>Sunday School <br> 10:00 a.m. - 11:00 a.m.
+                            </li>
+                            <li>Last Service <br> 11:00 a.m. - 1:00 p.m.</li>
+                            <li><a href="#">Leadership Meeting</a></li>
                         </ul>
                         <div class="main-button-red">
-                            <a href="meetings.html">All Upcoming Meetings</a>
+                            <a href="#">Worship with us!</a>
                         </div>
                     </div>
                 </div>
@@ -204,18 +209,18 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="meeting-item">
                                 <div class="thumb">
                                     <div class="price">
-                                        {{memberSum}}<span>{{attendance}}</span>
+                                        <!-- {{memberSum}}<span>{{attendance}}</span> -->
                                     </div>
-                                    <a href="meeting-details.html"><img src="{{ url_for('static', filename='images/img/meeting-01.jpg') }}" alt="New Lecturer Meeting"></a>
+                                    <a href="meeting-details.html"><img src="{{ url_for('static', filename='images/img/oldess.jpg') }}" alt="New Lecturer Meeting"></a>
                                 </div>
                                 <div class="down-content">
                                     <div class="date">
                                         <h6>Nov <span>10</span></h6>
                                     </div>
                                     <a href="meeting-details.html">
-                                        <h4>New Lecturers Meeting</h4>
+                                        <h4>Choir Practice</h4>
                                     </a>
-                                    <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
+                                    <p>Monday|Wednesday|Friday<br> 5:00 p.m. - 7:00 p.m.</p>
                                 </div>
                             </div>
                         </div>
@@ -223,18 +228,18 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="meeting-item">
                                 <div class="thumb">
                                     <div class="price">
-                                        <span>$36.00</span>
+                                        <!-- <span>$36.00</span> -->
                                     </div>
-                                    <a href="meeting-details.html"><img src="{{ url_for('static', filename='images/img/meeting-02.jpg') }}" alt="Online Teaching"></a>
+                                    <a href="meeting-details.html"><img src="{{ url_for('static', filename='images/img/bible-study.jpg') }}" alt="Online Teaching"></a>
                                 </div>
                                 <div class="down-content">
                                     <div class="date">
                                         <h6>Nov <span>24</span></h6>
                                     </div>
                                     <a href="meeting-details.html">
-                                        <h4>Online Teaching Techniques</h4>
+                                        <h4>Bible Study</h4>
                                     </a>
-                                    <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
+                                    <p>Wednesday<br>5:30 p.m.- 7:30 p.m.</p>
                                 </div>
                             </div>
                         </div>
@@ -242,18 +247,18 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="meeting-item">
                                 <div class="thumb">
                                     <div class="price">
-                                        <span>$14.00</span>
+                                        <!-- <span>$14.00</span> -->
                                     </div>
-                                    <a href="meeting-details.html"><img src="{{ url_for('static', filename='images/img/meeting-03.jpg') }}" alt="Higher Education"></a>
+                                    <a href="meeting-details.html"><img src="{{ url_for('static', filename='images/img/prayer.jpg') }}" alt="Higher Education"></a>
                                 </div>
                                 <div class="down-content">
                                     <div class="date">
                                         <h6>Nov <span>26</span></h6>
                                     </div>
                                     <a href="meeting-details.html">
-                                        <h4>Higher Education Conference</h4>
+                                        <h4>Prayer Meeting</h4>
                                     </a>
-                                    <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
+                                    <p>Friday<br>5:00 p.m. - 7:30 p.m.</p>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +266,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="meeting-item">
                                 <div class="thumb">
                                     <div class="price">
-                                        <span>$48.00</span>
+                                        <!-- <span>$48.00</span> -->
                                     </div>
                                     <a href="meeting-details.html"><img src="{{ url_for('static', filename='images/img/meeting-04.jpg')}}" alt="Student Training"></a>
                                 </div>
@@ -270,9 +275,9 @@ https://templatemo.com/tm-569-edu-meeting -->
                                         <h6>Nov <span>30</span></h6>
                                     </div>
                                     <a href="meeting-details.html">
-                                        <h4>Student Training Meetup</h4>
+                                        <h4>Dance Team</h4>
                                     </a>
-                                    <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
+                                    <p>Sunday<br>5:00 p.m. - 7:30 p.m.</p>
                                 </div>
                             </div>
                         </div>
@@ -289,8 +294,17 @@ https://templatemo.com/tm-569-edu-meeting -->
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="item">
-                                <h3>APPLY FOR BACHELOR DEGREE</h3>
-                                <p>You are allowed to use this edu meeting CSS template for your school or university or business. You can feel free to modify or edit this layout.</p>
+                                <h3>Make a prayer request</h3>
+                                <p>
+                                    <ul class="text-light">
+                                        <li>1. Prayer helps you develop a relationship with God ·</li>
+                                        <li>2. Prayer provides answers.</li>
+                                        <li>3. Prayer helps you gain an understanding of God's loving nature·</li>
+                                        <li>4. Prayer revials God's plan for us...</li>
+                                        <li>Join us now, let's breakthrough our destiny.</li>
+                                    </ul>
+                                    <br>
+                                </p>
                                 <div class="main-button-red">
                                     <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
                                 </div>
@@ -298,73 +312,49 @@ https://templatemo.com/tm-569-edu-meeting -->
                         </div>
                         <div class="col-lg-12">
                             <div class="item">
-                                <h3>APPLY FOR BACHELOR DEGREE</h3>
-                                <p>You are not allowed to redistribute the template ZIP file on any other template website. Please contact us for more information.</p>
+                                <h3>Meet our pastors</h3>
+                                <p>For counselling exortation and personal spiritual isssues.</p>
                                 <div class="main-button-yellow">
-                                    <div class="scroll-to-section"><a href="#contact">Join Us Now!</a></div>
+                                    <div class="scroll-to-section"><a href="#contact">Meet!</a></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" id="give">
+
                     <div class="accordions is-first-expanded">
-                        <article class="accordion">
-                            <div class="accordion-head">
-                                <span>About Edu Meeting HTML Template</span>
-                                <span class="icon">
-                        <i class="icon fa fa-chevron-right"></i>
-                    </span>
+                        <div>
+                            <h3>GIVE NOW!</h3>
+                        </div>
+                        <div class="card mb-2">
+                            <i class="fa fa-credit-card-alt"></i>
+                            <div class="card-body ">
+                                <h5 class="card-title ">Online</h5>
+                                <p class="card-text ">You can easily give a single gift or schedule recurring giving through our secure giving platform.</p>
+                                <a href="# " class="btn btn-primary ">Go through</a>
                             </div>
-                            <div class="accordion-body">
-                                <div class="content">
-                                    <p>If you want to get the latest collection of HTML CSS templates for your websites, you may visit <a rel="nofollow" href="https://www.toocss.com/" target="_blank">Too CSS website</a>. If you need a working contact form
-                                        script, please visit <a href="https://templatemo.com/contact" target="_parent">our contact page</a> for more info.</p>
-                                </div>
+                        </div>
+
+
+                        <div class="card mb-2 ">
+
+                            <div class="card-body ">
+                                <h5 class="card-title ">Mobile</h5>
+                                <p class="card-text ">Give using the Southeast App or by texting GIVE to 733733.</p>
+                                <a href="# " class="btn btn-primary ">Go through</a>
                             </div>
-                        </article>
-                        <article class="accordion">
-                            <div class="accordion-head">
-                                <span>HTML CSS Bootstrap Layout</span>
-                                <span class="icon">
-                        <i class="icon fa fa-chevron-right"></i>
-                    </span>
+                        </div>
+
+
+                        <div class="card ">
+
+                            <div class="card-body ">
+                                <h5 class="card-title ">Cash or Check</h5>
+                                <p class="card-text ">You can always give during the worship service at any of our campuses.</p>
+                                <a href="# " class="btn btn-primary ">Go through</a>
                             </div>
-                            <div class="accordion-body">
-                                <div class="content">
-                                    <p>Etiam posuere metus orci, vel consectetur elit imperdiet eu. Cras ipsum magna, maximus at semper sit amet, eleifend eget neque. Nunc facilisis quam purus, sed vulputate augue interdum vitae. Aliquam a elit massa.<br><br>                                        Nulla malesuada elit lacus, ac ultricies massa varius sed. Etiam eu metus eget nibh consequat aliquet. Proin fringilla, quam at euismod porttitor, odio odio tempus ligula, ut feugiat ex erat nec mauris. Donec viverra
-                                        velit eget lectus sollicitudin tincidunt.</p>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="accordion">
-                            <div class="accordion-head">
-                                <span>Please tell your friends</span>
-                                <span class="icon">
-                        <i class="icon fa fa-chevron-right"></i>
-                    </span>
-                            </div>
-                            <div class="accordion-body">
-                                <div class="content">
-                                    <p>Ut vehicula mauris est, sed sodales justo rhoncus eu. Morbi porttitor quam velit, at ullamcorper justo suscipit sit amet. Quisque at suscipit mi, non efficitur velit.<br><br> Cras et tortor semper, placerat eros sit
-                                        amet, porta est. Mauris porttitor sapien et quam volutpat luctus. Nullam sodales ipsum ac neque ultricies varius.</p>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="accordion last-accordion">
-                            <div class="accordion-head">
-                                <span>Share this to your colleagues</span>
-                                <span class="icon">
-                        <i class="icon fa fa-chevron-right"></i>
-                    </span>
-                            </div>
-                            <div class="accordion-body">
-                                <div class="content">
-                                    <p>Maecenas suscipit enim libero, vel lobortis justo condimentum id. Interdum et malesuada fames ac ante ipsum primis in faucibus.<br><br> Sed eleifend metus sit amet magna tristique, posuere laoreet arcu semper. Nulla
-                                        pellentesque ut tortor sit amet maximus. In eu libero ullamcorper, semper nisi quis, convallis nisi.</p>
-                                </div>
-                            </div>
-                        </article>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -376,7 +366,7 @@ https://templatemo.com/tm-569-edu-meeting -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h2>Our Popular Courses</h2>
+                        <h2>Our Regular Classes</h2>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -384,7 +374,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <div class="item">
                             <img src="{{ url_for('static', filename='images/img/course-01.jpg') }}" alt="">
                             <div class="down-content">
-                                <h4>Morbi tincidunt elit vitae justo rhoncus</h4>
+                                <h4>Bible Study</h4>
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-8">
@@ -406,7 +396,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <div class="item">
                             <img src="{{ url_for('static', filename='images/img/course-02.jpg') }}" alt="Course Two">
                             <div class="down-content">
-                                <h4>Curabitur molestie dignissim purus vel</h4>
+                                <h4>Baptism Class</h4>
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-8">
@@ -426,7 +416,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <div class="item">
                             <img src="{{ url_for('static', filename='images/img/course-03.jpg') }}" alt="">
                             <div class="down-content">
-                                <h4>Nulla at ipsum a mauris egestas tempor</h4>
+                                <h4>New Member Class</h4>
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-8">
@@ -447,7 +437,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <div class="item">
                             <img src="{{ url_for('static', filename='images/img/course-04.jpg') }}" alt="">
                             <div class="down-content">
-                                <h4>Aenean molestie quis libero gravida</h4>
+                                <h4>Evangelistic Teaching</h4>
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-8">
@@ -469,7 +459,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <div class="item">
                             <img src="{{ url_for('static', filename='images/img/course-01.jpg') }}" alt="">
                             <div class="down-content">
-                                <h4>Lorem ipsum dolor sit amet adipiscing elit</h4>
+                                <h4>Marriage Counselling</h4>
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-8">
@@ -491,7 +481,8 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <div class="item">
                             <img src="{{ url_for('static', filename='images/img/course-02.jpg') }}" alt="">
                             <div class="down-content">
-                                <h4>TemplateMo is the best website for Free CSS</h4>
+                                <!-- (Church building and decoration) -->
+                                <h4>Ecclesiology </h4>
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-8">
@@ -513,7 +504,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <div class="item">
                             <img src="{{ url_for('static', filename='images/img/course-03.jpg') }}" alt="">
                             <div class="down-content">
-                                <h4>Web Design Templates at your finger tips</h4>
+                                <h4>Organology Training</h4>
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-8">
@@ -527,116 +518,6 @@ https://templatemo.com/tm-569-edu-meeting -->
                                         </div>
                                         <div class="col-4">
                                             <span>$340</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="{{ url_for('static', filename='images/img/course-04.jpg') }}" alt="">
-                            <div class="down-content">
-                                <h4>Please visit our website again</h4>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <ul>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-4">
-                                            <span>$360</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="{{ url_for('static', filename='images/img/course-01.jpg') }}" alt="">
-                            <div class="down-content">
-                                <h4>Responsive HTML Templates for you</h4>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <ul>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-4">
-                                            <span>$400</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="{{ url_for('static', filename='images/img/course-02.jpg') }}" alt="">
-                            <div class="down-content">
-                                <h4>Download Free CSS Layouts for your business</h4>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <ul>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-4">
-                                            <span>$430</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="{{ url_for('static', filename='images/img/course-03.jpg') }}" alt="">
-                            <div class="down-content">
-                                <h4>Morbi in libero blandit lectus cursus</h4>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <ul>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-4">
-                                            <span>$480</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="{{ url_for('static', filename='images/img/course-04.jpg') }}" alt="">
-                            <div class="down-content">
-                                <h4>Curabitur molestie dignissim purus</h4>
-                                <div class="info">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <ul>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-4">
-                                            <span>$560</span>
                                         </div>
                                     </div>
                                 </div>
@@ -661,13 +542,13 @@ https://templatemo.com/tm-569-edu-meeting -->
                                 <div class="col-12">
                                     <div class="count-area-content percentage">
                                         <div class="count-digit">94</div>
-                                        <div class="count-title">Succesed Students</div>
+                                        <div class="count-title">Succesed members</div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="count-area-content">
                                         <div class="count-digit">126</div>
-                                        <div class="count-title">Current Teachers</div>
+                                        <div class="count-title">Members</div>
                                     </div>
                                 </div>
                             </div>
@@ -677,13 +558,13 @@ https://templatemo.com/tm-569-edu-meeting -->
                                 <div class="col-12">
                                     <div class="count-area-content new-students">
                                         <div class="count-digit">2345</div>
-                                        <div class="count-title">New Students</div>
+                                        <div class="count-title">New Members</div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="count-area-content">
                                         <div class="count-digit">32</div>
-                                        <div class="count-title">Awards</div>
+                                        <div class="count-title">New Convert</div>
                                     </div>
                                 </div>
                             </div>
@@ -745,19 +626,19 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <ul>
                             <li>
                                 <h6>Phone Number</h6>
-                                <span>010-020-0340</span>
+                                <span>+231-88-194-808</span>
                             </li>
                             <li>
                                 <h6>Email Address</h6>
-                                <span>info@meeting.edu</span>
+                                <span>ekklesia@me.io</span>
                             </li>
                             <li>
-                                <h6>Street Address</h6>
-                                <span>Rio de Janeiro - RJ, 22795-008, Brazil</span>
+                                <h6>Location</h6>
+                                <span>Carey St, 22795-008, Monrovia</span>
                             </li>
                             <li>
                                 <h6>Website URL</h6>
-                                <span>www.meeting.edu</span>
+                                <span>www.ekklesia.org</span>
                             </li>
                         </ul>
                     </div>
@@ -765,9 +646,9 @@ https://templatemo.com/tm-569-edu-meeting -->
             </div>
         </div>
         <div class="footer">
-            <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved.
-                <br> Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
-                <br> Distibuted By: <a href="https://themewagon.com" target="_blank" title="Build Better UI, Faster">ThemeWagon</a>
+            <p>Copyright © 2022 Ekklesia., Ltd. All Rights Reserved.
+                <br> Built By: Benjamin A. Ngafua</a>
+                <br> Powered By: <a href="https://kwagei.com" target="_blank" title="Build Better UI, Faster">Kwagei Group of Companies.</a>
             </p>
         </div>
     </section>
