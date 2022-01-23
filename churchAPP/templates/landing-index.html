@@ -69,7 +69,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <li class="has-sub">
                                 <a href="javascript:void(0)">Events</a>
                                 <ul class="sub-menu">
-                                    <li><a href="#">Birthday</a></li>
+                                    <li><a href="/birthday">Birthday</a></li>
                                     <li><a href="#">Wedding</a></li>
                                     <li><a href="#">Church Anniversary</a></li>
                                     <li><a href="#">Mother's Day</a></li>
@@ -115,6 +115,7 @@ https://templatemo.com/tm-569-edu-meeting -->
         </div>
     </section>
     <!-- ***** Main Banner Area End ***** -->
+    {% block centerContent %}
 
     <section class="services">
         <div class="container">
@@ -579,7 +580,7 @@ https://templatemo.com/tm-569-edu-meeting -->
             </div>
         </div>
     </section>
-
+    {% endblock %}
     <section class="contact-us" id="contact">
         <div class="container">
             <div class="row">
@@ -626,15 +627,15 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <ul>
                             <li>
                                 <h6>Phone Number</h6>
-                                <span>{{row.phone}}</span>
+                                <span>+231881194808</span>
                             </li>
                             <li>
                                 <h6>Email Address</h6>
-                                <span>{{row.email}}</span>
+                                <span>ekklesia@me.io</span>
                             </li>
                             <li>
                                 <h6>Location</h6>
-                                <span>Carey St, 22795-008, Monrovia</span>
+                                <span>Carey St., Monrovia</span>
                             </li>
                             <li>
                                 <h6>Website URL</h6>
