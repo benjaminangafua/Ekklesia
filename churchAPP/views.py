@@ -27,7 +27,7 @@ def home():
     memberSum = db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)']
     
     # Department's Section
-    deparmentSum = db.execute('SELECT COUNT(DISTINCT(department)) FROM members')[0]['COUNT(DISTINCT(department))']
+    departmentSum = db.execute('SELECT COUNT(DISTINCT(department)) FROM members')[0]['COUNT(DISTINCT(department))']
 
     if len(MemberData) > 0:
         # Birthday entry
@@ -62,26 +62,14 @@ def home():
 
         anniversary = db.execute(f"SELECT anniversary FROM account WHERE id ={anniversaryFound()}")[0]['anniversary']
 
-        landingData["birth_sum_today"]=birth_day
-        landingData["birth_sum_this_month"]=birth_month
-        landingData["newmember"]=newmember
-        landingData["anniversary"]=anniversary
-        landingData["deparmentSum"]=deparmentSum
-        landingData["memberSum"]=memberSum
-        landingData["attendance"]=attendance,
-        landingData["absence"]=absence
-        landingData["absent_percent"]=absent_percent
-        landingData["present_percent"]=present_percent
-        landingData["church"]=churchName()
-
         # Member's Section
         return render_template("dashboard-index.html", 
         birth_sum_today=birth_day, birth_sum_this_month=birth_month, newmember=newmember,anniversary=anniversary,
-        deparmentSum=deparmentSum, memberSum=memberSum, attendance=attendance,
+        departmentSum=departmentSum, memberSum=memberSum, attendance=attendance,
          absence=absence, absent_percent=absent_percent, present_percent=present_percent,
          church=churchName())
     
-    return render_template("dashboard-index.html", deparmentSum=deparmentSum, memberSum=memberSum)
+    return render_template("dashboard-index.html", departmentSum=departmentSum, memberSum=memberSum)
 
 # create New member
 @views.route('/add-new-member', methods=["GET", "POST"])
@@ -173,7 +161,7 @@ def first_timer():
             # Add first timer to existing data
             db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
              name, contact, location, gender)
-            return redirect("/vissitor")
+            return redirect("/visitor")
             
         # Add new first timer
         db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
@@ -215,14 +203,14 @@ def weddingAnniversary():
 def takeAttendance():
     if request.method == "POST":
         num = request.form.getlist("num")
-        totatl_attendance = len(num)
+        total_attendance = len(num)
                 
         # Check for attendance is taken
         if not num:
             flash("Num field empty.", category="error")
-        # Loop through the attendance , total_attendance=:total, total=totatl_attendance
+        # Loop through the attendance , total_attendance=:total, total=total_attendance
         for name in num:
-            db.execute("UPDATE attendance SET name=:name, total_attendance=:total, date=date('now') WHERE id >= 0",total=totatl_attendance,  name=name)
+            db.execute("UPDATE attendance SET name=:name, total_attendance=:total, date=date('now') WHERE id >= 0",total=total_attendance,  name=name)
             return redirect("/dashboard")
     member_names = db.execute("SELECT DISTINCT(name), id FROM members")
 

@@ -24,7 +24,7 @@
     - ### __init__.py
         > This makes the 'churchAPP directory' a python package
         > Once churchAPP is imported the _init_.py runs automatically
-    - ### modoles.py 
+    - ### modules.py 
         > This file heavily comprises of databases
     - ### views.py 
         > Main views, it controls all url endpoints for routing
@@ -33,7 +33,7 @@
     This file will be run when starting the webserver of this application
 
 
-A Church Management System (Ekklesia) for connecting administartors and members with church activities.
+A Church Management System (Ekklesia) for connecting administrators and members with church activities.
 
 # What is this app (Ekklesia)?
 - Ekklesia is church management software that aids churches and similar in managing, automating and organizing daily operations. It handles processes such as databases, communication, event and worship presentation programs.
@@ -75,3 +75,5 @@ The church being an organization of ministry leaders, administrators, staff, mem
 
 - Images use
 - ## The images are from: [PEXELS](https://www.pexels.com/)
+
+0776931461
