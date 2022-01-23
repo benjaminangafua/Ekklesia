@@ -13,16 +13,23 @@ def anniversaryFound():
     return sid
 
 MemberData = db.execute("SELECT * FROM members")
-landingData = {}
+
 # landing page
 @views.route("/")
 def landingPage():
 
-    return render_template("landing-index.html")
+    col = int(db.execute("SELECT currChurch FROM account")[0]["currChurch"])
+    print(col)
+    newmember = int(db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)'])
+    memberSum = int(db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)'])
+    row = db.execute("SELECT * FROM account WHERE id=?", col)[0]
+    return render_template("landing-index.html", memberSum=memberSum, newmember=newmember, row=row)
+
 # dashboard
 @views.route("/dashboard")
 @login_required
-def home():
+def home(): 
+    print(churchName())
     # Birthday's section
     memberSum = db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)']
     
@@ -33,7 +40,6 @@ def home():
         # Birthday entry
         this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
         today = int(db.execute("SELECT strftime('%d','now');")[0]["strftime('%d','now')"])
-        
         birth = db.execute(f"SELECT strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day' FROM members")
         
         # Number of birthdays today
@@ -59,7 +65,6 @@ def home():
         absent_percent = float("{:.2f}".format(floating))
 
         newmember = db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)']
-
         anniversary = db.execute(f"SELECT anniversary FROM account WHERE id ={anniversaryFound()}")[0]['anniversary']
 
         # Member's Section
@@ -68,7 +73,7 @@ def home():
         departmentSum=departmentSum, memberSum=memberSum, attendance=attendance,
          absence=absence, absent_percent=absent_percent, present_percent=present_percent,
          church=churchName())
-    
+         
     return render_template("dashboard-index.html", departmentSum=departmentSum, memberSum=memberSum)
 
 # create New member
@@ -107,8 +112,9 @@ def createMember():
 @views.route("/member")
 @login_required
 def seeMember():
+    db.execute("UPDATE account SET currChurch=:accNum", accNum=session["user_id"])
+
     members = db.execute("SELECT * FROM members ORDER BY id")
-    print(session["user_id"])
     return render_template("member.html",members=members)
 
 # New convert

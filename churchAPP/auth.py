@@ -58,19 +58,20 @@ def registerAccount():
 def loginAccount():
     if request.method == "POST":
         session.permanent=True
-        email = request.form.get("email")
-        code = int(request.form.get("code"))
+        
+        phoneNum = request.form.get("phone")
         password =request.form.get("password")
+        
         confirm_password =request.form.get("confirm_password")
                 
-        if not email:
-            error = "Invalid email!"
-        if code:
-            error = "Invalid code!"
+                
+        if len(phoneNum) < 10 and len(phoneNum) > 13:
+            error = "Invalid phoneNum!"
+
         if not password:
             error = "Invalid password!"
 
-        user = db.execute("SELECT * FROM account WHERE email=:mail", mail=str(email))[0]
+        user = db.execute("SELECT * FROM account WHERE phone=:mail", mail=str(phoneNum))[0]
         print(user)
         if user is None:
             error = "User not provided"
@@ -79,10 +80,10 @@ def loginAccount():
             error = "Password not confirm"
 
         elif len(user) != 1 or not check_password_hash(user["password"], password):
-            error = "Invalid email and Passoword!"
+            error = "Invalid phone and Passoword!"
 
         session["user_id"] = user["id"]
-
+        
         flash(error, category="error")
         print("last======")
         return redirect("/dashboard")
@@ -117,4 +118,3 @@ def login_required(view):
 def logout(): 
     session.pop("user_id",None)
     return redirect("/login")
-
