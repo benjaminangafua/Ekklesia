@@ -535,7 +535,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2>A Few Facts About Our University</h2>
+                            <h2>A Few Facts About Our Church</h2>
                         </div>
                         <div class="col-lg-6">
                             <div class="row">
@@ -547,7 +547,7 @@ https://templatemo.com/tm-569-edu-meeting -->
                                 </div>
                                 <div class="col-12">
                                     <div class="count-area-content">
-                                        <div class="count-digit">126</div>
+                                        <div class="count-digit">{{memberSum}}</div>
                                         <div class="count-title">Members</div>
                                     </div>
                                 </div>
@@ -557,13 +557,13 @@ https://templatemo.com/tm-569-edu-meeting -->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="count-area-content new-students">
-                                        <div class="count-digit">2345</div>
+                                        <div class="count-digit">{{newmember}}</div>
                                         <div class="count-title">New Members</div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="count-area-content">
-                                        <div class="count-digit">32</div>
+                                        <div class="count-digit">{{newmember}}</div>
                                         <div class="count-title">New Convert</div>
                                     </div>
                                 </div>
@@ -626,11 +626,11 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <ul>
                             <li>
                                 <h6>Phone Number</h6>
-                                <span>+231-88-194-808</span>
+                                <span>{{row.phone}}</span>
                             </li>
                             <li>
                                 <h6>Email Address</h6>
-                                <span>ekklesia@me.io</span>
+                                <span>{{row.email}}</span>
                             </li>
                             <li>
                                 <h6>Location</h6>
