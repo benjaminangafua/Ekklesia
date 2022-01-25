@@ -170,7 +170,7 @@ def visitors():
 
 # Birthday list
 @views.route("/birthday")
-@login_required
+# @login_required
 def birthday():
     # Months for birthday
     months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
