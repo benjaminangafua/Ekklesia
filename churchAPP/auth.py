@@ -71,7 +71,7 @@ def loginAccount():
         if not password:
             error = "Invalid password!"
 
-        user = db.execute("SELECT * FROM account WHERE phone=:mail", mail=str(phoneNum))[0]
+        user = db.execute("SELECT * FROM account WHERE phone=?", phoneNum)[0]
         print(user)
         if user is None:
             error = "User not provided"
@@ -79,7 +79,10 @@ def loginAccount():
         elif request.form.get("password") != confirm_password:
             error = "Password not confirm"
 
-        elif len(user) != 1 or not check_password_hash(user["password"], password):
+        elif len(user) != 1:
+            error = "Invalid phone and Passoword!"
+            
+        elif  not check_password_hash(user["password"], password):
             error = "Invalid phone and Passoword!"
 
         session["user_id"] = user["id"]

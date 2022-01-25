@@ -1,3 +1,4 @@
+from logging import error
 from flask import Blueprint, render_template, request, redirect, flash, session
 from .auth import login_required
 from churchAPP import db
@@ -45,14 +46,14 @@ def home():
         # Number of birthdays today
         birth_day = 0
         for day in birth:
-            if int(day["Day"]) == today:
-               birth_day= int(day["Day"])
+            if day["Day"] == today:
+               birth_day= day["Day"]
 
         # Number of birthdays this month
         birth_month = 0
         for month in birth:
-            if int(month["Month"]) == this_month:
-               birth_month = int(month["Month"])
+            if month["Month"] == this_month:
+               birth_month = month["Month"]
 
         # Attendance
         attendance = int(db.execute("SELECT total_attendance FROM attendance")[0]["total_attendance"])
@@ -80,7 +81,7 @@ def home():
 @views.route('/add-new-member', methods=["GET", "POST"])
 @login_required
 def createMember():
-    data = db.execute("SELECT * FROM members")
+    
     if request.method == "POST":
         relationship = request.form.get("relationship")
         name = request.form.get("name")
@@ -93,19 +94,15 @@ def createMember():
         date_of_birth = request.form.get("date_of_birth")
         gender = request.form.get("gender")
 
-        # print( member_data)
-        if len(data) > 0:
-            for row in data:
-                if row["name"]==name:
-                    flash("Name already exist.", category="error")
-
+        data = db.execute("SELECT name FROM members WHERE name=?", name)
+        print(data)
+        if name != data:
             db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
-                       name, location, department,  gender, contact, 
-                       relationship, occupation, role_play, date_of_birth, weddingdate)
-        db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
-                       name, location, department,  gender, contact, 
-                       relationship, occupation, role_play, date_of_birth, weddingdate)
-        return redirect("/dashboard")
+                        name, location, department,  gender, contact, 
+                        relationship, occupation, role_play, date_of_birth, weddingdate)
+            return redirect("/dashboard")
+        elif name==data:
+            raise error("Name already exist!")
     return render_template('add-new-member.html')
 
 # Display members
@@ -127,19 +124,14 @@ def new_convert():
         gender =request.form.get("gender")
         location = request.form.get("location")
         contact = request.form.get("contact")
-        data = db.execute("SELECT * FROM new_convert")
-        if len(data) > 0:
-            for row in data:
-                if row["name"]== name:
-                    flash("Name already exist.", category="error")
-
+        data = db.execute("SELECT name FROM new_convert WHERE name = ?", name)
+        
+        if data != name:
             db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
                         name, gender, date_of_birth, contact, location)
             return redirect("/convert")
-
-        db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
-                        name, gender, date_of_birth, contact, location)
-        return redirect("/convert")
+        
+        flash("Name already exist.", category="error")
 
     return render_template("add-new-convert.html")
 
@@ -159,21 +151,14 @@ def first_timer():
         location = request.form.get("location")
         contact = request.form.get("contact")
         gender = request.form.get("gender")
-        data = db.execute("SELECT * FROM first_time_visitors")
-        if len(data) > 0:
-            for row in data:
-                if row["name"]== name:
-                    flash("Name already exist.", category="error")
-            # Add first timer to existing data
+        data = db.execute("SELECT name FROM first_time_visitors WHERE name =?", name)
+        
+        if data != name:
             db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
-             name, contact, location, gender)
+                name, contact, location, gender)
             return redirect("/visitor")
-            
-        # Add new first timer
-        db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
-             name, contact, location, gender)
-        return redirect("/visitor")
-
+        flash("Name already exist.", category="error")
+        
     return render_template("add-first-timers.html")
 
 # get new visitor
@@ -234,6 +219,18 @@ def contact():
 def dashboard():
     return render_template('dashboard-index.html')
 
+# events field
+@views.route("/events")
+def events():
+    months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
+    this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
+    birth_rec = db.execute("SELECT name, strftime('%Y',date_of_birth) as 'Year', strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day'FROM members;")
+    
+    wedding_rec = db.execute("SELECT name, strftime('%Y',wedding_anniversary) as 'Year', strftime('%m',wedding_anniversary) as 'Month', strftime('%d',wedding_anniversary) as 'Day'FROM members;")
+    
+    return render_template("events.html", member=birth_rec,wedding=wedding_rec, thisMONTH=this_month, months=months)
+
+
 # use's -profie
 @views.route('/profile')
 @login_required
@@ -250,23 +247,20 @@ def setting():
 @views.route('/offering', methods=["GET", "POST"])
 @login_required
 def payOffering():
-    data = db.execute("SELECT * FROM offering;")
+    
 
     if request.method == "POST":
         name = request.form.get("name")
         amount = request.form.get("amount")
         number = request.form.get("account")
-        if len(data) > 0:
-            for row in data:
-                if row["name"]== name:
-                    db.execute("UPDATE offering SET member_name=:name, amount=:amount, number=number, pay_day=date('now') WHERE id >= 0",name= name, amount=amount, number=number)
-                    return redirect("/dashboard")
-            db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
+        data = db.execute("SELECT * FROM offering WHERE name = ?;", name)
+        if data == name:
+            db.execute("UPDATE offering SET member_name=:name, amount=:amount, number=number, pay_day=date('now') WHERE id >= 0",name= name, amount=amount, number=number)
             return redirect("/dashboard")
-
+        
         db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
         return redirect("/dashboard")
-    
+
     return render_template("offering.html", church=churchName())
 
 # send notification

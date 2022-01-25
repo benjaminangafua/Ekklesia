@@ -62,11 +62,12 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                            <li><a href="#">Ministry</a></li>
+                            <li class=""><a href="/#top" class="active">Home</a></li>
+                            <li><a href="/#ministry">Ministry</a></li>
 
-                            <li class="scroll-to-section"><a href="#sunday-service">Join Us</a></li>
-                            <li class="has-sub">
+                            <li class=""><a href="/#sunday-service">Join Us</a></li>
+                            <li><a href="/events">Upcoming Events</a></li>
+                            <!-- <li class="has-sub">
                                 <a href="javascript:void(0)">Events</a>
                                 <ul class="sub-menu">
                                     <li><a href="#">Birthday</a></li>
@@ -75,10 +76,10 @@ https://templatemo.com/tm-569-edu-meeting -->
                                     <li><a href="#">Mother's Day</a></li>
                                     <li><a href="#">Father's Day</a></li>
                                 </ul>
-                            </li>
-                            <li class="scroll-to-section"><a href="#courses">Teaching</a></li>
-                            <li class="scroll-to-section"><a href="#give">Give</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                            </li> -->
+                            <li class=""><a href="/#courses">Teaching</a></li>
+                            <li class=""><a href="/#give">Give</a></li>
+                            <li class=""><a href="/#contact">Contact Us</a></li>
                             <li><a href="/login">Login</a></li>
                         </ul>
                         <a class='menu-trigger' href="#">
@@ -115,8 +116,9 @@ https://templatemo.com/tm-569-edu-meeting -->
         </div>
     </section>
     <!-- ***** Main Banner Area End ***** -->
+    {% block main %}
 
-    <section class="services">
+    <section class="services" id="ministry">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -579,7 +581,7 @@ https://templatemo.com/tm-569-edu-meeting -->
             </div>
         </div>
     </section>
-
+    {% endblock %}
     <section class="contact-us" id="contact">
         <div class="container">
             <div class="row">
@@ -626,15 +628,15 @@ https://templatemo.com/tm-569-edu-meeting -->
                         <ul>
                             <li>
                                 <h6>Phone Number</h6>
-                                <span>{{row.phone}}</span>
+                                <span>+231-881-194-808</span>
                             </li>
                             <li>
                                 <h6>Email Address</h6>
-                                <span>{{row.email}}</span>
+                                <span>ekklesia@me.io</span>
                             </li>
                             <li>
                                 <h6>Location</h6>
-                                <span>Carey St, 22795-008, Monrovia</span>
+                                <span>Carey St., Monrovia</span>
                             </li>
                             <li>
                                 <h6>Website URL</h6>
