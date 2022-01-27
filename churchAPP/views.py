@@ -13,31 +13,31 @@ def anniversaryFound():
     sid =  session["user_id"]
     return sid
 
-MemberData = db.execute("SELECT * FROM members")
 
 # landing page
 @views.route("/")
 def landingPage():
-
-    col = int(db.execute("SELECT currChurch FROM account")[0]["currChurch"])
-    print(col)
-    newmember = int(db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)'])
-    memberSum = int(db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)'])
-    row = db.execute("SELECT * FROM account WHERE id=?", col)[0]
-    return render_template("landing-index.html", memberSum=memberSum, newmember=newmember, row=row)
-
+    if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM member")) !=0: 
+    
+        col = int(db.execute("SELECT currChurch FROM account")[0]["currChurch"])
+        print(col)
+        newmember = int(db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)'])
+        memberSum = int(db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)'])
+        row = db.execute("SELECT * FROM account WHERE id=?", col)[0]
+        return render_template("landing-index.html", memberSum=memberSum, newmember=newmember, row=row)
+    else:
+        return render_template("landing-index.html")
 # dashboard
 @views.route("/dashboard")
 @login_required
 def home(): 
-    print(churchName())
     # Birthday's section
     memberSum = db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)']
     
     # Department's Section
     departmentSum = db.execute('SELECT COUNT(DISTINCT(department)) FROM members')[0]['COUNT(DISTINCT(department))']
 
-    if len(MemberData) > 0:
+    if len(db.execute("SELECT * FROM account")) > 0:
         # Birthday entry
         this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
         today = int(db.execute("SELECT strftime('%d','now');")[0]["strftime('%d','now')"])
@@ -57,13 +57,21 @@ def home():
 
         # Attendance
         attendance = int(db.execute("SELECT total_attendance FROM attendance")[0]["total_attendance"])
-        floating_pre = (attendance * 100) / int(memberSum)
-        present_percent = float("{:.2f}".format(floating_pre))
+        absence = 0
+        if len(db.execute("SELECT * FROM members")) > 0:
 
-        # Absence
-        absence = int(memberSum) - attendance
-        floating = (absence * 100) / int(memberSum)
-        absent_percent = float("{:.2f}".format(floating))
+            floating_pre = (attendance * 100) / int(memberSum)
+            present_percent = float("{:.2f}".format(floating_pre))
+            # Absence
+
+            absence = int(memberSum) - attendance
+            floating = (absence * 100) / int(memberSum)
+            absent_percent = float("{:.2f}".format(floating))
+        else:
+            present_percent = 0
+            absent_percent = 0
+
+        
 
         newmember = db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)']
         anniversary = db.execute(f"SELECT anniversary FROM account WHERE id ={anniversaryFound()}")[0]['anniversary']
@@ -74,7 +82,7 @@ def home():
         departmentSum=departmentSum, memberSum=memberSum, attendance=attendance,
          absence=absence, absent_percent=absent_percent, present_percent=present_percent,
          church=churchName())
-         
+        
     return render_template("dashboard-index.html", departmentSum=departmentSum, memberSum=memberSum)
 
 # create New member
@@ -93,41 +101,48 @@ def createMember():
         department = request.form.get("department")
         role_play = request.form.get("role")
         occupation = request.form.get("occupation")
-        data = db.execute("SELECT name FROM members WHERE name=?", name)[0]["name"]
-
         # not require
         weddingdate = request.form.get("weddingdate")
+        
+        if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM member")) !=0: 
 
-        # Validate member's form
-        if not name:
-            flash("Invalid name!", category="danger")
-        elif not location:
-            flash("Invalid location!", category="danger")
-        elif not contact or len(contact)< 10:
-            flash("Invalid contact!", category="danger")
-        elif not gender:
-            flash("Invalid gender!", category="danger")
-        elif not date_of_birth:
-            flash("Invalid date of birth!", category="danger")
-        elif not relationship:
-            flash("Invalid relationship!", category="danger")
-        elif not department:
-            flash("Invalid department!", category="danger")
-        elif not role_play:
-            flash("Invalid role_play!", category="danger")
-        elif not occupation:
-            flash("Invalid date of occupation!", category="danger")
+            data = db.execute("SELECT name FROM members WHERE name=?", name)[0]["name"]
+            # Validate member's form
+            if not name:
+                flash("Invalid name!", category="danger")
+            elif not location:
+                flash("Invalid location!", category="danger")
+            elif not contact or len(contact)< 10:
+                flash("Invalid contact!", category="danger")
+            elif not gender:
+                flash("Invalid gender!", category="danger")
+            elif not date_of_birth:
+                flash("Invalid date of birth!", category="danger")
+            elif not relationship:
+                flash("Invalid relationship!", category="danger")
+            elif not department:
+                flash("Invalid department!", category="danger")
+            elif not role_play:
+                flash("Invalid role_play!", category="danger")
+            elif not occupation:
+                flash("Invalid date of occupation!", category="danger")
 
-        # Only add member if not exist
-        elif name != data:
-            db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
-                        name, location, department,  gender, contact, 
-                        relationship, occupation, role_play, date_of_birth, weddingdate)
-            flash("Member created successfull!",category="success")
-            
-            return redirect("/dashboard")
-        elif name==data:
-            flash("Name already exist!", category="danger")
+            # Only add member if not exist
+            elif name != data:
+                db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now') WHERE acc_id IN(SELECT id FROM account))",
+                            name, location, department,  gender, contact, 
+                            relationship, occupation, role_play, date_of_birth, weddingdate)
+                flash("Member created successfull!",category="success")
+                
+                return redirect("/dashboard")
+            elif name==data:
+                flash("Name already exist!", category="danger")
+            else:
+                db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now') WHERE acc_id IN(SELECT id FROM account))",
+                            name, location, department,  gender, contact, relationship, occupation, role_play, date_of_birth, weddingdate)
+                flash("Member created successfull!",category="success")
+                
+                return redirect("/dashboard")
 
     return render_template('add-new-member.html')
 
@@ -150,29 +165,35 @@ def new_convert():
         gender =request.form.get("gender")
         location = request.form.get("location")
         contact = request.form.get("contact")
-        # Check whether new convert already exist
-        data = db.execute("SELECT name FROM new_convert WHERE name = ?", name)[0]["name"]
 
-        # Validate new convert's form
-        if not name:
-            flash("Invalid name!", category="danger")
-        elif not location:
-            flash("Invalid location!", category="danger")
-        elif not contact or len(contact)< 10:
-            flash("Invalid contact!", category="danger")
-        elif not gender:
-            flash("Invalid gender!", category="danger")
-        elif not date_of_birth:
-            flash("Invalid date of birth!", category="danger")
+        if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM new_convert")) !=0: 
 
-        elif data != name:
-            db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
-                        name, gender, date_of_birth, contact, location)
-            return redirect("/convert")
-        
+            # Check whether new convert already exist
+
+            data = db.execute("SELECT name FROM new_convert WHERE name = ?", name)[0]["name"]
+
+            # Validate new convert's form
+            if not name:
+                flash("Invalid name!", category="danger")
+            elif not location:
+                flash("Invalid location!", category="danger")
+            elif not contact or len(contact)< 10:
+                flash("Invalid contact!", category="danger")
+            elif not gender:
+                flash("Invalid gender!", category="danger")
+            elif not date_of_birth:
+                flash("Invalid date of birth!", category="danger")
+
+            elif data != name:
+                db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
+                            name, gender, date_of_birth, contact, location)
+                return redirect("/convert")
+            else:
+                flash("Name already exist.", category="danger")
         else:
-            flash("Name already exist.", category="danger")
-
+            db.execute("INSERT INTO new_convert(name, gender, date_of_birth, contact, location, joined_date) VALUES(?, ?, ?, ?, ?, date('now'))",
+                            name, gender, date_of_birth, contact, location)
+            return redirect("/convert")
     return render_template("add-new-convert.html")
 
 # Convert
@@ -191,28 +212,35 @@ def first_timer():
         location = request.form.get("location")
         contact = request.form.get("contact")
         gender = request.form.get("gender")
-        data = db.execute("SELECT name FROM first_time_visitors WHERE name =?", name)[0]["name"]
 
-        # Validate first timer's form 
-        if not name:
-            flash("Invalid name!", category="danger")
-        elif not location:
-            flash("Invalid location!", category="danger")
-        elif not contact or len(contact)< 10:
-            flash("Invalid contact!", category="danger")
-        elif not gender:
-            flash("Invalid gender!", category="danger")
+        if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM first_time_visitors")) !=0: 
 
-        # Check whether new convert already exist
-        elif data != name:
+            data = db.execute("SELECT name FROM first_time_visitors WHERE name =?", name)[0]["name"]
+
+            # Validate first timer's form 
+            if not name:
+                flash("Invalid name!", category="danger")
+            elif not location:
+                flash("Invalid location!", category="danger")
+            elif not contact or len(contact)< 10:
+                flash("Invalid contact!", category="danger")
+            elif not gender:
+                flash("Invalid gender!", category="danger")
+
+            # Check whether new convert already exist
+            elif data != name:
+                db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
+                    name, contact, location, gender)
+
+                flash("First timer successfully added!", category="danger")
+                return redirect("/visitor")
+            else:
+                flash("Name already exist.", category="danger")
+        else:
             db.execute("INSERT INTO first_time_visitors(name, contact, location, gender, date_visited) VALUES(?, ?, ?, ?, date('now'))",
-                name, contact, location, gender)
-
+                    name, contact, location, gender)
             flash("First timer successfully added!", category="danger")
             return redirect("/visitor")
-        else:
-            flash("Name already exist.", category="danger")
-        
     return render_template("add-first-timers.html")
 
 # get new visitor
@@ -241,7 +269,7 @@ def weddingAnniversary():
     this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
     birth_rec = db.execute("SELECT name, strftime('%Y',wedding_anniversary) as 'Year', strftime('%m',wedding_anniversary) as 'Month', strftime('%d',wedding_anniversary) as 'Day'FROM members;")
     return render_template("wedding.html", member=birth_rec, thisMONTH=this_month, months=months)
- 
+
 # create attendance
 @views.route("/new-attendance", methods=["GET", "POST"])
 @login_required
@@ -308,25 +336,29 @@ def payOffering():
         name = request.form.get("name")
         amount = request.form.get("amount")
         number = request.form.get("account")
-        data = db.execute("SELECT * FROM offering WHERE name = ?;", name)
+        if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM offering")) !=0: 
+            
+            data = db.execute("SELECT name FROM offering WHERE name = ?;", name)[0]["name"]
 
-        # Validate first timer's form 
-        if not name:
-            flash("Invalid name!", category="danger")
-        elif not amount:
-            flash("Invalid amount!", category="danger")
-        elif not contact or len(contact)< 10:
-            flash("Invalid contact!", category="danger")
-        elif not number:
-            flash("Invalid number!", category="danger")
+            # Validate first timer's form 
+            if not name:
+                flash("Invalid name!", category="danger")
+            elif not amount:
+                flash("Invalid amount!", category="danger")
+            elif not contact or len(contact)< 10:
+                flash("Invalid contact!", category="danger")
+            elif not number:
+                flash("Invalid number!", category="danger")
 
-        elif data == name:
-            db.execute("UPDATE offering SET member_name=:name, amount=:amount, number=number, pay_day=date('now') WHERE id >= 0",name= name, amount=amount, number=number)
+            elif data == name:
+                db.execute("UPDATE offering SET member_name=:name, amount=:amount, number=number, pay_day=date('now') WHERE id >= 0",name= name, amount=amount, number=number)
+                return redirect("/dashboard")
+            
+            db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
             return redirect("/dashboard")
-        
-        db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
-        return redirect("/dashboard")
-
+        else:
+            db.execute("INSERT INTO offering(member_name, amount, number, pay_day) VALUES(?, ?, ?, date('now'))", name, amount, number)
+            return redirect("/dashboard")
     return render_template("offering.html", church=churchName())
 
 # send notification

@@ -25,29 +25,37 @@ def registerAccount():
         anniversary = request.form.get("anniversary")
         account = request.form.get("account")
         confirm_password = request.form.get("confirm_password")
-        data = db.execute("SELECT name FROM account WHERE name=?", fullname)[0]["name"]
 
-        print(data, fullname)
-        if not fullname:
-            flash("Invalid name!", category="danger")
+        if len(db.execute("SELECT * FROM account")) != 0:
 
-        elif len(fullname) < 2:
-            flash("Full name must be more than 2 characters!", category="danger")
-        elif len(code) < 3:
-            flash("Password must be 7 characters or more!", category="danger")
+            data = db.execute("SELECT name FROM account WHERE name=?", fullname)[0]["name"]
 
-        elif request.form.get("password") != confirm_password:
-            flash("Password not confirm!", category="danger")
-        
-        # Add account if not exist
+            print(data, fullname)
+            if not fullname:
+                flash("Invalid name!", category="danger")
 
-        elif data != fullname:  
+            elif len(fullname) < 2:
+                flash("Full name must be more than 2 characters!", category="danger")
+            elif len(code) < 3:
+                flash("Password must be 7 characters or more!", category="danger")
+
+            elif request.form.get("password") != confirm_password:
+                flash("Password not confirm!", category="danger")
+            
+            # Add account if not exist
+
+            elif data != fullname:  
+                db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
+                flash("Church system successfull created!", category="success")
+                return redirect("/login") 
+            else:
+                flash("Church already exist!", category="danger")
+                return render_template("register.html")  
+        else:
             db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
             flash("Church system successfull created!", category="success")
-            return redirect("/login") 
-        else:
-            flash("Church already exist!", category="danger")
-            return render_template("register.html")       
+            
+            return redirect("/login")
     return render_template("register.html")     
   
 # Sign in
@@ -60,24 +68,28 @@ def loginAccount():
         password =request.form.get("password")
         print(phoneNum)
 
+        if len(db.execute("SELECT * FROM account")) != 0:
+            
+            user = db.execute("SELECT id, phone, password  FROM account WHERE phone=?", phoneNum)[0]
+            print(user)
 
-        user = db.execute("SELECT id, phone, password  FROM account WHERE phone=?", phoneNum)[0]
-        print(user)
-        if len(phoneNum) < 10 and len(phoneNum) > 13:
-            flash("Invalid phoneNum!", category="danger")
+            if len(phoneNum) < 10 and len(phoneNum) > 13:
+                flash("Invalid phoneNum!", category="danger")
 
-        elif not password:
-            flash("Invalid password!", category="danger")
+            elif not password:
+                flash("Invalid password!", category="danger")
 
-        elif user is None:
-            flash("User not provided", category="danger")
+            elif user is None:
+                flash("User not provided", category="danger")
 
-        elif  not check_password_hash(user["password"], password):
-            flash("Invalid phone and Passoword!", category="danger")
+            elif  not check_password_hash(user["password"], password):
+                flash("Invalid phone and Passoword!", category="danger")
+            else:
+                session["user_id"] = user["id"]
+                flash("Login was successful", category="success")
+                return redirect("/dashboard")
         else:
-            session["user_id"] = user["id"]
-            flash("Login was successful", category="success")
-            return redirect("/dashboard")
+            return redirect("/register")
         
     return render_template('login.html')
 
