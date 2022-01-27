@@ -3,6 +3,18 @@
 <!-- main -->
 
 {% block innerContaint %}
+<h1>Add First Time Visitor</h1>
+{% if error %}
+<p class=error>
+    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <!-- <strong>Title</strong> -->{{ error }}
+    </div>
+
+    {% endif %}
+</p>
+
+
 
 <form method="post">
     <div class="mb-3 py-5">

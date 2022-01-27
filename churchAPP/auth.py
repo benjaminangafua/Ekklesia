@@ -1,6 +1,7 @@
 from flask import render_template, g, url_for, request, redirect, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
-import functools
+import functools  
+import re
 from . import db
 
 from flask import Blueprint
@@ -14,43 +15,39 @@ auth = Blueprint("auth", __name__)
 @auth.route('/register', methods=["GET", "POST"])
 def registerAccount():
     # Create church account
-    data = db.execute("SELECT * FROM account")
     if request.method == "POST":
         
         fullname = request.form.get("full_name")
         email = request.form.get("email")
         code = request.form.get("code")
         password =generate_password_hash(request.form.get("password"), "sha256")
-        phone = request.form.get("phone")
+        phone = msisdn_sanitizer(request.form.get("phone"), "+231")
         anniversary = request.form.get("anniversary")
         account = request.form.get("account")
         confirm_password = request.form.get("confirm_password")
+        data = db.execute("SELECT name FROM account WHERE name=?", fullname)[0]["name"]
 
-        error = None
+        print(data, fullname)
         if not fullname:
-            error = "Invalid name"
-        print(request.form.get("email"))
+            flash("Invalid name!", category="danger")
 
-        if len(fullname) < 2:
-            error = "Full name must be more than 2 characters."
+        elif len(fullname) < 2:
+            flash("Full name must be more than 2 characters!", category="danger")
         elif len(code) < 3:
-            error = "Password must be 7 characters or more."
+            flash("Password must be 7 characters or more!", category="danger")
 
         elif request.form.get("password") != confirm_password:
-            error = "Password not confirm"
+            flash("Password not confirm!", category="danger")
         
         # Add account if not exist
-        if len(data) > 0:
-            for row in data:
-                if row["name"]== fullname:
-                    error = "Church already exist."
-            db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
-            return redirect("/login") 
-        db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, anniversary, phone,  account)
-        
-        flash(error, category="error") 
 
-        return redirect("/login")       
+        elif data != fullname:  
+            db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
+            flash("Church system successfull created!", category="success")
+            return redirect("/login") 
+        else:
+            flash("Church already exist!", category="danger")
+            return render_template("register.html")       
     return render_template("register.html")     
   
 # Sign in
@@ -59,38 +56,28 @@ def loginAccount():
     if request.method == "POST":
         session.permanent=True
         
-        phoneNum = request.form.get("phone")
+        phoneNum = msisdn_sanitizer(request.form.get("phone"), "+231")
         password =request.form.get("password")
-        
-        confirm_password =request.form.get("confirm_password")
-                
-                
-        if len(phoneNum) < 10 and len(phoneNum) > 13:
-            error = "Invalid phoneNum!"
+        print(phoneNum)
 
-        if not password:
-            error = "Invalid password!"
 
-        user = db.execute("SELECT * FROM account WHERE phone=?", phoneNum)[0]
+        user = db.execute("SELECT id, phone, password  FROM account WHERE phone=?", phoneNum)[0]
         print(user)
-        if user is None:
-            error = "User not provided"
+        if len(phoneNum) < 10 and len(phoneNum) > 13:
+            flash("Invalid phoneNum!", category="danger")
 
-        elif request.form.get("password") != confirm_password:
-            error = "Password not confirm"
+        elif not password:
+            flash("Invalid password!", category="danger")
 
-        elif len(user) != 1:
-            error = "Invalid phone and Passoword!"
-            
+        elif user is None:
+            flash("User not provided", category="danger")
+
         elif  not check_password_hash(user["password"], password):
-            error = "Invalid phone and Passoword!"
-
-        session["user_id"] = user["id"]
-        
-        flash(error, category="error")
-        print("last======")
-        return redirect("/dashboard")
-
+            flash("Invalid phone and Passoword!", category="danger")
+        else:
+            session["user_id"] = user["id"]
+            flash("Login was successful", category="success")
+            return redirect("/dashboard")
         
     return render_template('login.html')
 
@@ -121,3 +108,56 @@ def login_required(view):
 def logout(): 
     session.pop("user_id",None)
     return redirect("/login")
+
+
+  
+
+def msisdn_sanitizer(msisdn, phone_code, leading_zero=False, plus=True) :
+
+    #  append the phone to the msisdn
+    msisdn = msisdn.strip()
+    msisdn = msisdn.replace('+', '')
+    
+    pattern = re.compile("[^0-9]")
+    msisdn = pattern.sub("", msisdn)
+
+    phone_code = phone_code.replace('+', '')
+
+    pattern = re.compile(r"^("+phone_code+")+")
+    msisdn = pattern.sub(phone_code, msisdn)
+
+    regex = "^" + phone_code
+    if re.match(regex, msisdn):
+        msisdn = msisdn[len(phone_code):]
+
+    if leading_zero is False:
+        pattern = re.compile("^0+")
+        msisdn = pattern.sub("", msisdn)
+
+    msisdn = phone_code + msisdn
+    if plus:
+        msisdn = "+" + msisdn
+    if not msisdn:
+        flash("Invalid Number!", category="danger")
+        return redirect(request.url)
+    else:
+        return msisdn
+
+# Use cases
+# Key thing taken care of
+
+
+#     take care of leading zeros in from of numbers
+#     remove exccess leading zeros
+#     remove invalid character
+#     remove white spaces
+#     remove repeating phone code
+
+# print(msisdn_sanitizer("+2348030000000", "+234")) # +2348030000000
+# print(msisdn_sanitizer("+2348030000000", "+234")) # +2348030000000
+# print(msisdn_sanitizer("08030000000", "+234")) # +2348030000000
+# print(msisdn_sanitizer("8030000000", "+234")) # +2348030000000
+# print(msisdn_sanitizer("+234803000#!*()%,^&0000", "+234")) # +2348030000000
+# print(msisdn_sanitizer("+234803000kddskdskf0000", "+234")) # +2348030000000
+# print(msisdn_sanitizer("+234000000080 3000 00 00","+234")) # +2348030000000
+# print(msisdn_sanitizer("+234234234234 80 3000 00 00","+234")) # +2348030000000

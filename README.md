@@ -1,6 +1,3 @@
-
-
-
 # Project Title:  Ekklesia
 
 # Built By: Benjamin A. Ngafua

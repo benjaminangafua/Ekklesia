@@ -4,6 +4,7 @@
         "Ekklesia",
         "Kwagei",
         "Ngafua",
-        "topbar"
+        "topbar",
+        "werkzeug"
     ]
 }
