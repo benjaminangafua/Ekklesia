@@ -1,4 +1,4 @@
-from flask import render_template, g, url_for, request, redirect, flash, session
+from flask import render_template, g, request, redirect, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import functools  
 import re
@@ -19,11 +19,8 @@ def registerAccount():
         
         fullname = request.form.get("full_name")
         email = request.form.get("email")
-        code = request.form.get("code")
         password =generate_password_hash(request.form.get("password"), "sha256")
         phone = msisdn_sanitizer(request.form.get("phone"), "+231")
-        anniversary = request.form.get("anniversary")
-        account = request.form.get("account")
         confirm_password = request.form.get("confirm_password")
 
         if len(db.execute("SELECT * FROM account")) != 0:
@@ -36,8 +33,6 @@ def registerAccount():
 
             elif len(fullname) < 2:
                 flash("Full name must be more than 2 characters!", category="danger")
-            elif len(code) < 3:
-                flash("Password must be 7 characters or more!", category="danger")
 
             elif request.form.get("password") != confirm_password:
                 flash("Password not confirm!", category="danger")
@@ -45,14 +40,14 @@ def registerAccount():
             # Add account if not exist
 
             elif data != fullname:  
-                db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
+                db.execute("INSERT INTO account(name, email, password, phone) VALUES(?, ?, ?, ?)", fullname, email, password, phone)
                 flash("Church system successfull created!", category="success")
                 return redirect("/login") 
             else:
                 flash("Church already exist!", category="danger")
                 return render_template("register.html")  
         else:
-            db.execute("INSERT INTO account(name, code, email, password, phone, bank_account, anniversary) VALUES(?, ?, ?, ?, ?, ?, ?)", fullname, code, email, password, phone,  account, anniversary)
+            db.execute("INSERT INTO account(name, email, password, phone) VALUES(?, ?, ?, ?)", fullname, email, password, phone)
             flash("Church system successfull created!", category="success")
             
             return redirect("/login")

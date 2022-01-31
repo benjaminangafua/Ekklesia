@@ -17,7 +17,7 @@ def anniversaryFound():
 # landing page
 @views.route("/")
 def landingPage():
-    if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM member")) !=0: 
+    if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM members")) !=0: 
     
         col = int(db.execute("SELECT currChurch FROM account")[0]["currChurch"])
         print(col)
@@ -74,11 +74,9 @@ def home():
         
 
         newmember = db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)']
-        anniversary = db.execute(f"SELECT anniversary FROM account WHERE id ={anniversaryFound()}")[0]['anniversary']
-
         # Member's Section
         return render_template("dashboard-index.html", 
-        birth_sum_today=birth_day, birth_sum_this_month=birth_month, newmember=newmember,anniversary=anniversary,
+        birth_sum_today=birth_day, birth_sum_this_month=birth_month, newmember=newmember,
         departmentSum=departmentSum, memberSum=memberSum, attendance=attendance,
          absence=absence, absent_percent=absent_percent, present_percent=present_percent,
          church=churchName())
@@ -104,9 +102,9 @@ def createMember():
         # not require
         weddingdate = request.form.get("weddingdate")
         
-        if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM member")) !=0: 
+        if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM members")) !=0: 
 
-            data = db.execute("SELECT name FROM members WHERE name=?", name)[0]["name"]
+            data = db.execute("SELECT name FROM members")[0]["name"]
             # Validate member's form
             if not name:
                 flash("Invalid name!", category="danger")
@@ -137,12 +135,11 @@ def createMember():
                 return redirect("/dashboard")
             elif name==data:
                 flash("Name already exist!", category="danger")
-            else:
-                db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now') WHERE acc_id IN(SELECT id FROM account))",
-                            name, location, department,  gender, contact, relationship, occupation, role_play, date_of_birth, weddingdate)
-                flash("Member created successfull!",category="success")
-                
-                return redirect("/dashboard")
+        else:
+            db.execute("INSERT INTO members(name, location, department, gender, contact, relationship, occupation, role_play,  date_of_birth, wedding_anniversary, joined_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?,?,?, date('now'))",
+                        name, location, department,  gender, contact, relationship, occupation, role_play, date_of_birth, weddingdate)
+            flash("Member created successfull!",category="success")
+            return redirect("/dashboard")
 
     return render_template('add-new-member.html')
 
@@ -170,7 +167,7 @@ def new_convert():
 
             # Check whether new convert already exist
 
-            data = db.execute("SELECT name FROM new_convert WHERE name = ?", name)[0]["name"]
+            data = db.execute("SELECT name FROM new_convert")[0]["name"]
 
             # Validate new convert's form
             if not name:
@@ -215,7 +212,7 @@ def first_timer():
 
         if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM first_time_visitors")) !=0: 
 
-            data = db.execute("SELECT name FROM first_time_visitors WHERE name =?", name)[0]["name"]
+            data = db.execute("SELECT name FROM first_time_visitors")[0]["name"]
 
             # Validate first timer's form 
             if not name:
@@ -338,7 +335,7 @@ def payOffering():
         number = request.form.get("account")
         if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM offering")) !=0: 
             
-            data = db.execute("SELECT name FROM offering WHERE name = ?;", name)[0]["name"]
+            data = db.execute("SELECT name FROM offering")[0]["name"]
 
             # Validate first timer's form 
             if not name:
