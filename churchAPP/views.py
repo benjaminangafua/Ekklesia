@@ -1,4 +1,3 @@
-
 from flask import Blueprint, render_template, request, redirect, flash, session
 from .auth import login_required
 from churchAPP import db
@@ -12,7 +11,6 @@ def churchName():
 def anniversaryFound():
     sid =  session["user_id"]
     return sid
-
 
 # landing page
 @views.route("/")
@@ -70,9 +68,7 @@ def home():
         else:
             present_percent = 0
             absent_percent = 0
-
-        
-
+ 
         newmember = db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)']
         # Member's Section
         return render_template("dashboard-index.html", 
@@ -308,11 +304,11 @@ def events():
     months = ["1", "January","February","March","April", "May","June","July","August","September", "October","November","December"]
     this_month = int(db.execute("SELECT strftime('%m','now');")[0]["strftime('%m','now')"])
     birth_rec = db.execute("SELECT name, strftime('%Y',date_of_birth) as 'Year', strftime('%m',date_of_birth) as 'Month', strftime('%d',date_of_birth) as 'Day'FROM members;")
-    
+    print(f"----------->>>>>>{birth_rec}<<<<<---------------{this_month}")
     wedding_rec = db.execute("SELECT name, strftime('%Y',wedding_anniversary) as 'Year', strftime('%m',wedding_anniversary) as 'Month', strftime('%d',wedding_anniversary) as 'Day'FROM members;")
     
     return render_template("events.html", member=birth_rec,wedding=wedding_rec, thisMONTH=this_month, months=months)
-
+ 
 # use's -profie
 @views.route('/profile')
 @login_required

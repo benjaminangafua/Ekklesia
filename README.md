@@ -29,7 +29,6 @@
 - ## app.py
     This file will be run when starting the webserver of this application
 
-
 A Church Management System (Ekklesia) for connecting administrators and members with church activities.
 
 # What is this app (Ekklesia)?

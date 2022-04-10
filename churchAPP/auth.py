@@ -23,9 +23,8 @@ def registerAccount():
         phone = msisdn_sanitizer(request.form.get("phone"), "+231")
         confirm_password = request.form.get("confirm_password")
 
-        if len(db.execute("SELECT * FROM account")) != 0:
-
-            data = db.execute("SELECT name FROM account WHERE name=?", fullname)[0]["name"]
+        if len(db.execute("SELECT * FROM account")) > 0:
+            data = db.execute("SELECT name FROM account WHERE name=?", fullname)
 
             print(data, fullname)
             if not fullname:
@@ -61,12 +60,12 @@ def loginAccount():
         
         phoneNum = msisdn_sanitizer(request.form.get("phone"), "+231")
         password =request.form.get("password")
-        print(phoneNum)
+        print(password)
 
         if len(db.execute("SELECT * FROM account")) != 0:
             
             user = db.execute("SELECT id, phone, password  FROM account WHERE phone=?", phoneNum)[0]
-            print(user)
+            print(user, 'USER=================>')
 
             if len(phoneNum) < 10 and len(phoneNum) > 13:
                 flash("Invalid phoneNum!", category="danger")

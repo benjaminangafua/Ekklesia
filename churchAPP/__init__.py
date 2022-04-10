@@ -3,7 +3,6 @@ from flask import Flask
 from flask_session import Session
 from cs50 import SQL
 from tempfile import mkdtemp
-
 db = SQL('sqlite:///church.db')
 
 def create_app():
@@ -23,4 +22,3 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(views, url_prefix='/')  
     return app
-
