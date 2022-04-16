@@ -58,17 +58,17 @@ def loginAccount():
     if request.method == "POST":
         session.permanent=True
         
-        phoneNum = msisdn_sanitizer(request.form.get("phone"), "+231")
+        username = msisdn_sanitizer(request.form.get("phone"), "+231")
         password =request.form.get("password")
         print(password)
 
         if len(db.execute("SELECT * FROM account")) != 0:
             
-            user = db.execute("SELECT id, phone, password  FROM account WHERE phone=?", phoneNum)[0]
+            user = db.execute("SELECT id, phone, password  FROM account WHERE phone=?", username)[0]
             print(user, 'USER=================>')
 
-            if len(phoneNum) < 10 and len(phoneNum) > 13:
-                flash("Invalid phoneNum!", category="danger")
+            if len(username) < 10 and len(username) > 13:
+                flash("Invalid username!", category="danger")
 
             elif not password:
                 flash("Invalid password!", category="danger")
