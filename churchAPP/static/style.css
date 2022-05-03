@@ -1062,13 +1062,14 @@ a[data-toggle="collapse"] {
 }
 
 #sidebar h4 {
-    background: navy;
+    background: #070122;
     margin: 0;
     padding: 21px 25px 19px;
     font-weight: 500;
     font-size: 18px;
     color: #fff;
-    border-bottom: solid #F09608 1px;
+    border-bottom: solid #fff 3px;
+    border-top: solid #fff 3px;
 }
 
 

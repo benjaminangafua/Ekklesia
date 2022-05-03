@@ -15,16 +15,16 @@ def anniversaryFound():
 # landing page
 @views.route("/")
 def landingPage():
-    if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM members")) !=0: 
+    # if len(db.execute("SELECT * FROM account")) != 0 and len(db.execute("SELECT * FROM members")) !=0: 
     
-        col = int(db.execute("SELECT currChurch FROM account")[0]["currChurch"])
-        print(col)
-        newmember = int(db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)'])
-        memberSum = int(db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)'])
-        row = db.execute("SELECT * FROM account WHERE id=?", col)[0]
-        return render_template("landing-index.html", memberSum=memberSum, newmember=newmember, row=row)
-    else:
-        return render_template("landing-index.html")
+    #     col = int(db.execute("SELECT currChurch FROM account")[0]["currChurch"])
+    #     print(col)
+    #     newmember = int(db.execute("SELECT COUNT(*) FROM new_convert")[0]['COUNT(*)'])
+    #     memberSum = int(db.execute('SELECT COUNT(*) FROM members')[0]['COUNT(*)'])
+    #     row = db.execute("SELECT * FROM account WHERE id=?", col)[0]
+    #     return render_template("landing-index.html", memberSum=memberSum, newmember=newmember, row=row)
+    # else:
+    return render_template("index.html")
 # dashboard
 @views.route("/dashboard")
 @login_required

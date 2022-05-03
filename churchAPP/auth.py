@@ -58,14 +58,13 @@ def loginAccount():
     if request.method == "POST":
         session.permanent=True
         
-        username = msisdn_sanitizer(request.form.get("phone"), "+231")
+        username = request.form.get("username")
         password =request.form.get("password")
         print(password)
 
         if len(db.execute("SELECT * FROM account")) != 0:
             
-            user = db.execute("SELECT id, phone, password  FROM account WHERE phone=?", username)[0]
-            print(user, 'USER=================>')
+            user = db.execute("SELECT id, name, password  FROM account WHERE name = ?", username)[0]
 
             if len(username) < 10 and len(username) > 13:
                 flash("Invalid username!", category="danger")
@@ -77,7 +76,7 @@ def loginAccount():
                 flash("User not provided", category="danger")
 
             elif  not check_password_hash(user["password"], password):
-                flash("Invalid phone and Passoword!", category="danger")
+                flash("Invalid Passoword!", category="danger")
             else:
                 session["user_id"] = user["id"]
                 flash("Login was successful", category="success")

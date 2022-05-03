@@ -7,14 +7,14 @@ db = SQL('sqlite:///church.db')
 
 def create_app():
     app = Flask(__name__)
-    app.secret_key = 'super secret key'
+    app.secret_key = 'Somekinda secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config["SESSION_FILE_DIR"] = mkdtemp()
     app.config["SESSION_PERMANENT"] = True
     app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=3)
     Session(app)
 
-    # Initialize database
+    # Initialize blueprints
     
     from .views import views
     from .auth import auth
